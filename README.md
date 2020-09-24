@@ -1,7 +1,7 @@
 # SynapseLoadV2
 
 # Synapse Load Solution - V2 
-Been doing more work and revamping the original solution a bit.  I will keep the version at https://aka.ms/SynapseLoad as the GA version.  I'll only use GA versions of the projects in that version.  This V2 will contain as many items as I can automate with PowerShell utilizing the new Azure Synapse Analytics (workspace preview) https://docs.microsoft.com/en-us/azure/synapse-analytics/overview-what-is.  
+Been doing more work and revamping the original solution a bit.  I will keep the version at https://aka.ms/SynapseLoad as the GA version.  I'll only use GA versions of the projects in that version.  This V2 will contain as many items as I can automate with PowerShell utilizing the new Azure Synapse Analytics (workspace preview) https://docs.microsoft.com/en-us/azure/synapse-analytics/overview-what-is.  I have also enhanced this version to contain a pipeline to extract SQL tables to parquet in a time based fashion.  
 	
 The architecture of the solution diagrammed below.  
 
@@ -9,10 +9,13 @@ The architecture of the solution diagrammed below.
 
 ## Asset List 
 	1. Azure Resource Group
-	2. Azure SQL Database - metadata table location 
+	2. Azure SQL Database - metadata tables location 
 	3. Azure Data Lake Gen 2 - location to land extracted parquet files 
 	4. Azure Data Factory - pipelines to extract data 
-	5. Azure Synapse - destination to load parquet extracted files 
+	5. Azure Synapse Workspace - new environment for anayltics 
+	6. Azure Synapse SQL Pool - destination to load parquet extracted files 
+	
+	<<<<below needs updated >>>>>>>> 
 
 * [CreateResources](https://github.com/hfoley/SynapseLoad/tree/master/CreateResources)   - contains PowerShell scripts to build all the Azure components in the solution. 
 * [AzureSQLScripts](https://github.com/hfoley/SynapseLoad/tree/master/AzureSQLScripts)   - contains SQL Scripts to create and load the Azure SQL metadata table.  Also contains a subdirectory with sample data and related scripts if you'd like to test/view the solution with sample data instead.  
