@@ -9,12 +9,12 @@ This folder contains the CreateNewWorkspaceResources.ps1 file.  This PowerShell 
 	5. Azure Synapse Workspace - new environment for anayltics 
 	6. Azure Synapse SQL Pool - destination to load parquet extracted files 
 	
-##Steps 
+## Steps 
   1. Download CreateNewWorkspaceResources.ps1 and store it locally.  
   2. Edit the script variables needed in the top section.  Anything needing updated will be contained within <> and a description of what the variable drives within them.  Replace the <text> portion to the names/values for your environment.  
   3. Save and run the script.
   
-##What happens 
+## What happens 
   1. You'll be prompted to login to Azure as user with rights to create services. 
   2. You'll be prompted 2 times for a userid and password.  This user id and password will become your SQL Server Admin of the Azure SQL DB and the Azure Synapse SQL pool.  
   
