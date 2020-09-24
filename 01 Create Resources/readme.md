@@ -13,6 +13,8 @@ This folder contains the CreateNewWorkspaceResources.ps1 file.  This PowerShell 
   1. Download CreateNewWorkspaceResources.ps1 and store it locally.  
   2. Edit the script variables needed in the top section.  Anything needing updated will be contained within <> and a description of what the variable drives within them.  Replace the <text> portion to the names/values for your environment.  
   3. Save and run the script.
+  4. Validate all services create successfully. 
+  5. Move to [02 ADF Create](https://github.com/hfoley/SynapseLoadV2/tree/master/02%20ADF%20Create)
   
 ## What happens 
   1. You'll be prompted to login to Azure as user with rights to create services. 
