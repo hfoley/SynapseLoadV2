@@ -12,8 +12,10 @@ This folder contains MetadataTablesCreate.sql and a Sample subfolder.  The Metad
 ## Steps 
   1. Connect to your Azure SQL database that will house the metadata tables and open MetadataTablesCreate.sql.  
   2. Edit the script's insert statements to load the metadata tables based on your environment. 
-  3. Run the script.  
-  4. 
+  3. Run the script and validate tables are loaded with expected values. 
+  4. Go into Azure Data Factory and run SQL Date Based Extract pipeline and verify successful. 
+  5. Validate the parquet file is extracted and landed in ADLS location as expected. 
+  6. Go into Azure Data Factory and run either Synapse Load * pipelines based on metadata table values provided.  The parameter you pass the pipeline is the FileName value contained in [ADF].[MetadataLoad] table.  
   
 ## What happens 
   1. When 01-UpdateADFJsonTemplateFiles.ps1 runs you'll see 3 additional json files created.  These will be used when running 2nd script.  
