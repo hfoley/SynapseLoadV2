@@ -7,7 +7,7 @@ The architecture of the solution diagrammed below.
 
 ![alt text](https://github.com/hfoley/EDU/blob/master/images/SynapseLoadArchitecture.png?raw=true)
 
-## Asset List - These are 
+## Asset List - These items will be created in your Azure subscription
 	1. Azure Resource Group
 	2. Azure SQL Database - metadata tables location 
 	3. Azure Data Lake Gen 2 - location to land extracted parquet files 
@@ -15,7 +15,7 @@ The architecture of the solution diagrammed below.
 	5. Azure Synapse Workspace - new environment for anayltics 
 	6. Azure Synapse SQL Pool - destination to load parquet extracted files 
 	
-* [CreateResources](https://github.com/hfoley/SynapseLoad/tree/master/CreateResources)   - contains PowerShell scripts to build all the Azure components in the solution. 
+* [01 Create Resources](https://github.com/hfoley/SynapseLoadV2/tree/master/01%20Create%20Resources)   - contains PowerShell scripts to build all the Azure components in the solution. 
 * [AzureSQLScripts](https://github.com/hfoley/SynapseLoad/tree/master/AzureSQLScripts)   - contains SQL Scripts to create and load the Azure SQL metadata table.  Also contains a subdirectory with sample data and related scripts if you'd like to test/view the solution with sample data instead.  
 * [ADFPosh](https://github.com/hfoley/SynapseLoad/tree/master/ADFPosh)  - contains PowerShell scripts to build the ADF coponents and pipelines 
 	
