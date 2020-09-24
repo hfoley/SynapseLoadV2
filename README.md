@@ -15,18 +15,14 @@ The architecture of the solution diagrammed below.
 	5. Azure Synapse Workspace - new environment for anayltics 
 	6. Azure Synapse SQL Pool - destination to load parquet extracted files 
 	
-	<<<<below needs updated >>>>>>>> 
-
-* [CreateResources](https://github.com/hfoley/SynapseLoad/tree/master/CreateResources)   - contains PowerShell scripts to build all the Azure components in the solution. 
-* [AzureSQLScripts](https://github.com/hfoley/SynapseLoad/tree/master/AzureSQLScripts)   - contains SQL Scripts to create and load the Azure SQL metadata table.  Also contains a subdirectory with sample data and related scripts if you'd like to test/view the solution with sample data instead.  
-* [ADFPosh](https://github.com/hfoley/SynapseLoad/tree/master/ADFPosh)  - contains PowerShell scripts to build the ADF coponents and pipelines 
-
-Each sub-directory has additional readme files with further details but the high level steps are below.  
 
 ## Pre-reqs
 1. Need to have at least PowerShell 5.1 installed.  You can check this by running the following script. 
 	$PSVersionTable.PSVersion
 2. Install Powershell AZ module.  This solution has been tested with 4.1.0.  You can find info on installing this at https://www.powershellgallery.com/packages/Az/4.1.0
+
+You'll need to download all the files locally.  Below is listing of the files you'll be working with for deploying this solution. 
+
 
 ## Steps
 1. Create all assets.  If you'd like to create the Azure components you can use scripts in CreateResources.   Open each file and edit the variables section at the top.  You can do a search/replace for the text string `"***Change This***"`.  Run them individually starting at 01ResourceGroupCreate.ps1 and run them in order by naming. 
