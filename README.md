@@ -1,7 +1,7 @@
 # SynapseLoadV2
 
 # Synapse Load Solution - V2 
-Been doing more work and revamping the original solution a bit.  I will keep the version at https://aka.ms/SynapseLoad as the GA version.  I'll only use GA versions of the projects in that version.  This V2 will contain as many items as I can automate with PowerShell utilizing the new Azure Synapse Analytics (workspace preview) https://docs.microsoft.com/en-us/azure/synapse-analytics/overview-what-is.  I have also enhanced this version to contain a pipeline to extract SQL tables to parquet in a time based fashion.  
+Been doing more work and revamping the original solution (https://aka.ms/SynapseLoad ) a bit.  I will keep the version at that link as the GA version.  I'll only use GA versions of the services in that version.  This V2 version here will contain as many items as I can automate with PowerShell utilizing the new Azure Synapse Analytics (workspace preview) https://docs.microsoft.com/en-us/azure/synapse-analytics/overview-what-is.  I have also enhanced this version to contain a pipeline to extract SQL tables to parquet in a time based fashion.  
 	
 The architecture of the solution diagrammed below.  
 
