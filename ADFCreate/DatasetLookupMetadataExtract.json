@@ -1,0 +1,16 @@
+{
+    "name": "LookupMetadataExtract",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "AzureSQLDBLnkSvr",
+            "type": "LinkedServiceReference"
+        },
+        "annotations": [],
+        "type": "AzureSqlTable",
+        "schema": [],
+        "typeProperties": {
+            "schema": "ADF",
+            "table": "ExtractTables"
+        }
+    }
+}

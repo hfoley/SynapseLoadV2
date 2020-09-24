@@ -1,0 +1,38 @@
+{
+    "name": "LookupMetadataLoad",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "AzureSQLDBLnkSvr",
+            "type": "LinkedServiceReference"
+        },
+        "annotations": [],
+        "type": "AzureSqlTable",
+        "schema": [
+            {
+                "name": "FileName",
+                "type": "varchar"
+            },
+            {
+                "name": "BlobDirectoryFile",
+                "type": "varchar"
+            },
+            {
+                "name": "StagingTable",
+                "type": "varchar"
+            },
+            {
+                "name": "TargetTable",
+                "type": "varchar"
+            },
+            {
+                "name": "ColumnKey",
+                "type": "varchar"
+            }
+        ],
+        "typeProperties": {
+            "schema": "ADF",
+            "table": "MetadataLoad"
+        }
+    },
+    "type": "Microsoft.DataFactory/factories/datasets"
+}

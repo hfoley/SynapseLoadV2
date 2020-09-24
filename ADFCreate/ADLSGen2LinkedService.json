@@ -1,0 +1,12 @@
+{
+    "name": "ADLSGen2LnkSvr",
+    "type": "Microsoft.DataFactory/factories/linkedservices",
+    "properties": {
+        "annotations": [],
+        "type": "AzureBlobFS",
+        "typeProperties": {
+            "url": "***Change This***",
+            "encryptedCredential": "GonnaFailUpdateInPortalAfterForNow"
+        }
+    }
+}

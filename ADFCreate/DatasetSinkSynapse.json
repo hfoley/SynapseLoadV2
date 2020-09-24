@@ -1,0 +1,34 @@
+{
+    "name": "SinkSynapseTable",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "SynapseLnkSvr",
+            "type": "LinkedServiceReference"
+        },
+        "parameters": {
+            "TargetTable": {
+                "type": "string"
+            },
+            "TargetTableSchema": {
+                "type": "string"
+            },
+            "ColumnKey": {
+                "type": "string"
+            }
+        },
+        "annotations": [],
+        "type": "AzureSqlDWTable",
+        "schema": [],
+        "typeProperties": {
+            "schema": {
+                "value": "@dataset().TargetTableSchema",
+                "type": "Expression"
+            },
+            "table": {
+                "value": "@dataset().TargetTable",
+                "type": "Expression"
+            }
+        }
+    },
+    "type": "Microsoft.DataFactory/factories/datasets"
+}
