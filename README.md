@@ -34,10 +34,11 @@ The architecture of the solution diagrammed below.
 	Get-Module -Name Az.DataF* -ListAvailable
 
 
-## Steps
-This solution contains several files to help build the solution.  There are PowerShell scripts to run to create the resources.  There are also several json files that will be used to build the Azure Data Factory pipelines.  There is also a SQL Server script to run to create and populate 2 metadata tables to drive the 3 pipelines.  
+## Steps 
 
-1. Download all the files locally.  Open the Powershell scripts and update the variables sections of each file at the top with your information.  Each variable that needs updated will be within < description >.  
+
+1. Begin in [01 Create Resources](https://github.com/hfoley/SynapseLoadV2/tree/master/01%20Create%20Resources) if you'd like to create all the components in Azure. Skip to #2 if you have existing resources to utilize.  
+
 2. If you'd like to create all the components used in the solution - run CreateNewWorkspaceResources.ps1 file.  You'll need to login to Azure and have sufficient privledges to build services in Azure.  
 3. Next run UpdateADFJsonTemplateFiles.ps1.  This file will generate new linked services json files to use to build the ADF linked services.  This script will update the json files with data you supply in the variables section.  
 4. Run the script CreateNewADFResources.ps1.  This file will create the Azure Data Factory and all the needed components within ADF.  
