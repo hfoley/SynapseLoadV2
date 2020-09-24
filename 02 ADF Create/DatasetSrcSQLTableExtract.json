@@ -1,0 +1,30 @@
+{
+    "name": "SrcSQLTableExtract",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "AzureSQLDBLnkSvr",
+            "type": "LinkedServiceReference"
+        },
+        "parameters": {
+            "TargetTableSchema": {
+                "type": "string"
+            },
+            "TableName": {
+                "type": "string"
+            }
+        },
+        "annotations": [],
+        "type": "AzureSqlTable",
+        "schema": [],
+        "typeProperties": {
+            "schema": {
+                "value": "@dataset().TargetTableSchema",
+                "type": "Expression"
+            },
+            "table": {
+                "value": "@dataset().TableName",
+                "type": "Expression"
+            }
+        }
+    }
+}

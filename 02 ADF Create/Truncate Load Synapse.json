@@ -1,0 +1,115 @@
+{
+    "name": "Synapse Truncate Load",
+    "properties": {
+        "activities": [
+            {
+                "name": "Lookup_Metadata",
+                "type": "Lookup",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "7.00:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "AzureSqlSource",
+                        "sqlReaderQuery": {
+                            "value": "SELECT FileName, BlobContainer, TargetTableSchema, StagingTable, TargetTable, ColumnKey \nFROM adf.MetadataLoad\nWHERE fileName = '@{pipeline().parameters.filename}'",
+                            "type": "Expression"
+                        },
+                        "queryTimeout": "02:00:00"
+                    },
+                    "dataset": {
+                        "referenceName": "LookupMetadataLoad",
+                        "type": "DatasetReference"
+                    }
+                }
+            },
+            {
+                "name": "Trunc_Reload_Target",
+                "type": "Copy",
+                "dependsOn": [
+                    {
+                        "activity": "Lookup_Metadata",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "7.00:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "ParquetSource",
+                        "storeSettings": {
+                            "type": "AzureBlobFSReadSettings",
+                            "recursive": true,
+                            "enablePartitionDiscovery": false
+                        }
+                    },
+                    "sink": {
+                        "type": "SqlDWSink",
+                        "preCopyScript": {
+                            "value": "TRUNCATE TABLE @{concat(concat(activity('Lookup_Metadata').output.firstrow.TargetTableSchema),'.', string(activity('Lookup_Metadata').output.firstrow.TargetTable))}",
+                            "type": "Expression"
+                        },
+                        "allowCopyCommand": true,
+                        "disableMetricsCollection": false
+                    },
+                    "enableStaging": false
+                },
+                "inputs": [
+                    {
+                        "referenceName": "SrcADLSFileLoad",
+                        "type": "DatasetReference",
+                        "parameters": {
+                            "BlobContainer": {
+                                "value": "@activity('Lookup_Metadata').output.firstrow.BlobContainer",
+                                "type": "Expression"
+                            },
+                            "FileName": {
+                                "value": "@activity('Lookup_Metadata').output.firstrow.FileName",
+                                "type": "Expression"
+                            },
+                            "ColumnKey": {
+                                "value": "@activity('Lookup_Metadata').output.firstrow.ColumnKey",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ],
+                "outputs": [
+                    {
+                        "referenceName": "SinkSynapseTable",
+                        "type": "DatasetReference",
+                        "parameters": {
+                            "TargetTable": "@activity('Lookup_Metadata').output.firstRow.TargetTable",
+                            "TargetTableSchema": {
+                                "value": "@activity('Lookup_Metadata').output.firstrow.TargetTableSchema",
+                                "type": "Expression"
+                            },
+                            "ColumnKey": "@activity('Lookup_Metadata').output.firstrow.ColumnKey"
+                        }
+                    }
+                ]
+            }
+        ],
+        "parameters": {
+            "filename": {
+                "type": "string"
+            }
+        },
+        "annotations": []
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}

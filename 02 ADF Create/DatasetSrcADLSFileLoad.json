@@ -1,0 +1,38 @@
+{
+    "name": "SrcADLSFileLoad",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "ADLSGen2LnkSvr",
+            "type": "LinkedServiceReference"
+        },
+        "parameters": {
+            "BlobContainer": {
+                "type": "string"
+            },
+            "FileName": {
+                "type": "String"
+            },
+            "ColumnKey": {
+                "type": "string"
+            }
+        },
+        "annotations": [],
+        "type": "Parquet",
+        "typeProperties": {
+            "location": {
+                "type": "AzureBlobFSLocation",
+                "fileName": {
+                    "value": "@dataset().FileName",
+                    "type": "Expression"
+                },
+                "fileSystem": {
+                    "value": "@dataset().BlobContainer",
+                    "type": "Expression"
+                }
+            },
+            "compressionCodec": "snappy"
+        },
+        "schema": []
+    },
+    "type": "Microsoft.DataFactory/factories/datasets"
+}

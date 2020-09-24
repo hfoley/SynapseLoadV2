@@ -1,0 +1,190 @@
+{
+    "name": "Synapse Incremental Load",
+    "properties": {
+        "activities": [
+            {
+                "name": "Lookup_Metadata",
+                "type": "Lookup",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "7.00:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "AzureSqlSource",
+                        "sqlReaderQuery": {
+                            "value": "SELECT FileName, BlobContainer, TargetTableSchema, StagingTable, TargetTable, ColumnKey \nFROM adf.MetadataLoad\nWHERE fileName = '@{pipeline().parameters.filename}'",
+                            "type": "Expression"
+                        },
+                        "queryTimeout": "02:00:00"
+                    },
+                    "dataset": {
+                        "referenceName": "LookupMetadataLoad",
+                        "type": "DatasetReference"
+                    }
+                }
+            },
+            {
+                "name": "Copy Data To Staging",
+                "type": "Copy",
+                "dependsOn": [
+                    {
+                        "activity": "Lookup_Metadata",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "7.00:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "ParquetSource",
+                        "storeSettings": {
+                            "type": "AzureBlobFSReadSettings",
+                            "recursive": true,
+                            "enablePartitionDiscovery": false
+                        }
+                    },
+                    "sink": {
+                        "type": "SqlDWSink",
+                        "preCopyScript": {
+                            "value": "TRUNCATE TABLE @{concat(concat(activity('Lookup_Metadata').output.firstrow.TargetTableSchema),'.', string(activity('Lookup_Metadata').output.firstrow.StagingTable))}",
+                            "type": "Expression"
+                        },
+                        "allowCopyCommand": true,
+                        "disableMetricsCollection": false
+                    },
+                    "enableStaging": false
+                },
+                "inputs": [
+                    {
+                        "referenceName": "SrcADLSFileLoad",
+                        "type": "DatasetReference",
+                        "parameters": {
+                            "BlobContainer": {
+                                "value": "@activity('Lookup_Metadata').output.firstrow.BlobContainer",
+                                "type": "Expression"
+                            },
+                            "FileName": {
+                                "value": "@activity('Lookup_Metadata').output.firstrow.FileName",
+                                "type": "Expression"
+                            },
+                            "ColumnKey": "@activity('Lookup_Metadata').output.firstrow.ColumnKey"
+                        }
+                    }
+                ],
+                "outputs": [
+                    {
+                        "referenceName": "SinkSynapseTable",
+                        "type": "DatasetReference",
+                        "parameters": {
+                            "TargetTable": "@activity('Lookup_Metadata').output.firstRow.StagingTable",
+                            "TargetTableSchema": {
+                                "value": "@activity('Lookup_Metadata').output.firstrow.TargetTableSchema",
+                                "type": "Expression"
+                            },
+                            "ColumnKey": {
+                                "value": "@activity('Lookup_Metadata').output.firstrow.ColumnKey",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "Delete_From_And_Load_Target",
+                "type": "Copy",
+                "dependsOn": [
+                    {
+                        "activity": "Copy Data To Staging",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "7.00:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "SqlDWSource",
+                        "queryTimeout": "02:00:00"
+                    },
+                    "sink": {
+                        "type": "SqlDWSink",
+                        "preCopyScript": {
+                            "value": "DELETE FROM @{concat(concat(activity('Lookup_Metadata').output.firstrow.TargetTableSchema),'.', string(activity('Lookup_Metadata').output.firstrow.TargetTable))}\nWHERE @{concat('', string(activity('Lookup_Metadata').output.firstrow.ColumnKey))} \nIN \n(SELECT @{concat('', string(activity('Lookup_Metadata').output.firstrow.ColumnKey))} \nFROM @{concat(concat(activity('Lookup_Metadata').output.firstrow.TargetTableSchema),'.', string(activity('Lookup_Metadata').output.firstrow.StagingTable))}\n)",
+                            "type": "Expression"
+                        },
+                        "disableMetricsCollection": false
+                    },
+                    "enableStaging": false
+                },
+                "inputs": [
+                    {
+                        "referenceName": "SinkSynapseTable",
+                        "type": "DatasetReference",
+                        "parameters": {
+                            "TargetTable": {
+                                "value": "@activity('Lookup_Metadata').output.firstrow.StagingTable",
+                                "type": "Expression"
+                            },
+                            "TargetTableSchema": {
+                                "value": "@activity('Lookup_Metadata').output.firstrow.TargetTableSchema",
+                                "type": "Expression"
+                            },
+                            "ColumnKey": {
+                                "value": "@activity('Lookup_Metadata').output.firstrow.ColumnKey",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ],
+                "outputs": [
+                    {
+                        "referenceName": "SinkSynapseTable",
+                        "type": "DatasetReference",
+                        "parameters": {
+                            "TargetTable": {
+                                "value": "@activity('Lookup_Metadata').output.firstrow.TargetTable",
+                                "type": "Expression"
+                            },
+                            "TargetTableSchema": {
+                                "value": "@activity('Lookup_Metadata').output.firstrow.TargetTableSchema",
+                                "type": "Expression"
+                            },
+                            "ColumnKey": {
+                                "value": "@activity('Lookup_Metadata').output.firstrow.ColumnKey",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "parameters": {
+            "filename": {
+                "type": "string"
+            }
+        },
+        "annotations": []
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}
