@@ -4,7 +4,9 @@ This folder contains 2 Powershell scripts and multiple json files.
 
 ## Asset List - These items will be created 
 	1. Azure Data Factory if the supplied name doesn't exist.  
-	2. More stuff - fill in more 
+	2. 3 ADF linked services
+	3. 6 ADF datasets 
+	4. 3 ADF pipelines 
 	
 	
 ## Steps 
