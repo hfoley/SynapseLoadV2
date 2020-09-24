@@ -37,7 +37,7 @@ The architecture of the solution diagrammed below.
 ## Steps 
 
 
-1. Begin in [01 Create Resources](https://github.com/hfoley/SynapseLoadV2/tree/master/01%20Create%20Resources) if you'd like to create all the components in Azure. Skip to #2 if you have existing resources to utilize.  
+1. Begin in [01 Create Resources](https://github.com/hfoley/SynapseLoadV2/tree/master/01%20Create%20Resources) if you'd like to create all the components in Azure. Skip to #2 if you have existing resources to utilize.  More details are in the readme of each folder.  
 
 2. If you'd like to create all the components used in the solution - run CreateNewWorkspaceResources.ps1 file.  You'll need to login to Azure and have sufficient privledges to build services in Azure.  
 3. Next run UpdateADFJsonTemplateFiles.ps1.  This file will generate new linked services json files to use to build the ADF linked services.  This script will update the json files with data you supply in the variables section.  
