@@ -29,16 +29,19 @@ The architecture of the solution diagrammed below.
 	Get-Module -Name Az.Sy* -ListAvailable
 	Get-Module -Name Az.DataF* -ListAvailable
 
-You'll need to download all the files locally.  Below is listing of the files you'll be working with for deploying this solution. 
-
 
 ## Steps
-1. Create all assets.  If you'd like to create the Azure components you can use scripts in CreateResources.   Open each file and edit the variables section at the top.  You can do a search/replace for the text string `"***Change This***"`.  Run them individually starting at 01ResourceGroupCreate.ps1 and run them in order by naming. 
-2. Connect to Azure SQL DB and run scripts 01  - 03 .  These scripts will create ADF.MetadataLoad schema, table, and an insert script to load the table that will drive the pipelines.  More details in AzureSQLScripts readme and in the comments of the scripts to run. 
-3. Connect to Azure Synapse (make sure running) and run scripts to create your target tables (staging and final destination).  If you're using the sample use scripts in sample location.   
-4. Run the scripts for creating the Data Factory components contained in ADFPosh directory.  
-5. Load parquet files into storage location. 
-6. Run each pipeline passing it the parameter of the filename to load.  This value should correspond to the value in the ADF.MetadataLoad table's Filename column.  
+This solution contains several files to help build the solution.  There are PowerShell scripts to run to create the resources.  There are also several json files that will be used to build the Azure Data Factory pipelines.  There is also a SQL Server script to run to create and populate 2 metadata tables to drive the 3 pipelines.  
+
+1. Download all the files locally.  Open the Powershell scripts and update the variables sections of each file at the top with your information.  Each variable that needs updated will be within < description >.  
+2. If you'd like to create all the components used in the solution - run CreateNewWorkspaceResources.ps1 file.  You'll need to login to Azure and have sufficient privledges to build services in Azure.  
+3. Next run UpdateADFJsonTemplateFiles.ps1.  This file will generate new linked services json files to use to build the ADF linked services.  This script will update the json files with data you supply in the variables section.  
+4. Run the script CreateNewADFResources.ps1.  This file will create the Azure Data Factory and all the needed components within ADF.  
+5. Validate all the components created. 
+6. Update each of the 3 linked services created with appropriate storage account key for ADLS and passwords for Azure SQL and Azure Synapse.  Test that each linked service connects successfully. 
+7. Connect to the Azure SQL DB that will house the metadata tables.  Open, edit each section based on your environment and run the script MetadataTablesCreate.sql.  
+8. You'll need to make sure you have appropriate source and target tables to load created in the SQL Server and destination Synapse sql pool.  If you'd like to use the sample data, it's contained < here>.  
+
 
 
 
