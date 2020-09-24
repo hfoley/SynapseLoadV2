@@ -41,14 +41,9 @@ Each folder contains PowerShell and/or SQL scripts you'll need to update for you
 
 2. Start here to only want to create the Azure Data Factory components >> [02 ADF Create](https://github.com/hfoley/SynapseLoadV2/tree/master/02%20ADF%20Create).  
 
-3. 
+3. Start here if you only need to create the metadata tables >> [03 SQL Scripts](https://github.com/hfoley/SynapseLoadV2/tree/master/03%20SQL%20Scripts)
 
-3. Next run UpdateADFJsonTemplateFiles.ps1.  This file will generate new linked services json files to use to build the ADF linked services.  This script will update the json files with data you supply in the variables section.  
-4. Run the script CreateNewADFResources.ps1.  This file will create the Azure Data Factory and all the needed components within ADF.  
-5. Validate all the components created. 
-6. Update each of the 3 linked services created with appropriate storage account key for ADLS and passwords for Azure SQL and Azure Synapse.  Test that each linked service connects successfully. 
-7. Connect to the Azure SQL DB that will house the metadata tables.  Open, edit each section based on your environment and run the script MetadataTablesCreate.sql.  
-8. You'll need to make sure you have appropriate source and target tables to load created in the SQL Server and destination Synapse sql pool.  If you'd like to use the sample data, it's contained < here>.  
+
 
 
 
