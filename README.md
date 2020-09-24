@@ -37,7 +37,7 @@ The architecture of the solution diagrammed below.
 ## Steps 
 Each folder contains PowerShell and/or SQL scripts you'll need to update for your environment.  Further details on the files are in the readme of each section.  
 
-1. Begin in [01 Create Resources](https://github.com/hfoley/SynapseLoadV2/tree/master/01%20Create%20Resources) if you'd like to create all the components in Azure. Skip to #2 if you have existing resources to utilize.  
+1. Start here to create Azure resources above >> [01 Create Resources](https://github.com/hfoley/SynapseLoadV2/tree/master/01%20Create%20Resources) 
 
 2. If you have existing resources and only want to create the Azure Data Factory components, start at [02 ADF Create](https://github.com/hfoley/SynapseLoadV2/tree/master/02%20ADF%20Create).  
 
