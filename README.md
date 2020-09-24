@@ -5,13 +5,17 @@ The architecture of the solution diagrammed below.
 
 ![alt text](https://github.com/hfoley/EDU/blob/master/images/SynapseLoadArchitecture.png?raw=true)
 
-## Asset List - These items will be created in your Azure subscription
+## Asset List - These items will be created in your Azure subscription 
 	1. Azure Resource Group
 	2. Azure SQL Database - metadata tables location 
 	3. Azure Data Lake Gen 2 - location to land extracted parquet files 
 	4. Azure Data Factory - pipelines to extract data 
 	5. Azure Synapse Workspace - new environment for anayltics 
 	6. Azure Synapse SQL Pool - destination to load parquet extracted files 
+	7. Azure SQL DB metadata tables to drive ADF pipelines
+	8. Azure Data Factory - SQL Date Based Extract pipeline - extracts data from SQL Server tables specified (example uses Azure SQL DB created or specified) 
+	9. Azure Data Factory - Synapse Incremental Load pipeline - parameter/metadata driven pipeline that does incremental load into Synapse SQL pool staging/target tables
+	10. Azure Data Factory - Synapse Truncate Load pipeline - parameter/metadata driven pipeline that does truncate/reload pattern into Synapse SQL pool only target tables
 	
 * [01 Create Resources](https://github.com/hfoley/SynapseLoadV2/tree/master/01%20Create%20Resources)   - contains PowerShell scripts to build all the Azure components in the solution. 
 * [02 ADF Create](https://github.com/hfoley/SynapseLoadV2/tree/master/02%20ADF%20Create)   - contains powershell script and json files needed to build Azure Data Factory pipelines and other components.    
