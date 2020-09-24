@@ -16,9 +16,7 @@ This folder contains MetadataTablesCreate.sql and a Sample subfolder.  The Metad
   4. Go into Azure Data Factory and run SQL Date Based Extract pipeline and verify successful. 
   5. Validate the parquet file is extracted and landed in ADLS location as expected. 
   6. Go into Azure Data Factory and run either Synapse Load * pipelines based on metadata table values provided.  The parameter you pass the pipeline is the FileName value contained in [ADF].[MetadataLoad] table.  
+  7. Connect to the Synapse SQL pool and validate the parquet files are loaded into the target tables appropriately.  
   
-## What happens 
-  1. When 01-UpdateADFJsonTemplateFiles.ps1 runs you'll see 3 additional json files created.  These will be used when running 2nd script.  
-  2. When 02-CreateNewADFResources.ps1 runs you may get a prompt to overlay an existing component.  Choose yes if so.  
-  
+
   
