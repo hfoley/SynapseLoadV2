@@ -28,24 +28,30 @@ $LinkedServiceFile3 = ".\SynapseLinkedServiceFinal.json"
 #Azure SQL metadata table driving the load process ADF.MetadataLoad
 $DatasetName1 = "LookupMetadataLoad"
 $DatasetFile1 = ".\DatasetLookupMetadataLoad.json"
-#Azure SQL metadata table driving the extract process ADF.ExtractTables 
-$DatasetName5 = "LookupMetadataExtract"
-$DatasetFile5 = ".\DatasetLookupMetadataExtract.json"
-#Destination Synapse tables from the load process 
-$DatasetName3 = "SinkSynapseTable"
-$DatasetFile3 = ".\DatasetSinkSynapse.json"
-#Source SQL Server tables that will get an extract from extract process 
-$DatasetName4 = "SrcSQLTableExtract"
-$DatasetFile4 = ".\DatasetSrcSQLTableExtract.json"
 
-##
 #The parquet files to load into Synapse for the load processes 
 $DatasetName2 = "SrcADLSFileLoad"
 $DatasetFile2 = ".\DatasetSrcADLSFileLoad.json"
 
+#Destination Synapse tables from the load process 
+$DatasetName3 = "SinkSynapseTable"
+$DatasetFile3 = ".\DatasetSinkSynapse.json"
+
+#Source SQL Server tables that will get an extract from extract process 
+$DatasetName4 = "SrcSQLTableExtract"
+$DatasetFile4 = ".\DatasetSrcSQLTableExtract.json"
+
+#Azure SQL metadata table driving the extract process ADF.ExtractTables 
+$DatasetName5 = "LookupMetadataExtract"
+$DatasetFile5 = ".\DatasetLookupMetadataExtract.json"
+
 #The desination parquet files built during extract process 
 $DatasetName6 = "SinkADLSParquetExtract"
 $DatasetFile6 = ".\DatasetSinkADLSParquetExtract.json"
+
+#The custom logging table for capturing data from pipeline runs
+$DatasetName7 = "SinkSQLLogTable"
+$DatasetFile7 = ".\DatasetSinkSQLLogTable.json"
 
 $PipelineName1 = "Synapse Incremental Load"
 $PipelineFile1 = ".\IncrementalPipelineCreate.json"
