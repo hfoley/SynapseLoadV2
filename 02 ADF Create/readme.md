@@ -12,7 +12,7 @@ Note:  I am using separate Azure Data Factory in this solution instead of pipeli
   1. SQL Date Based Extract - Extracts from multiple Azure SQL tables based on a date column allowing for a time range extracted to parquet files in ADLS Gen 2
   2. SQL Not Date Based Extract - Extracts from Azure SQL table based on a non date based column. Builds dynamic where clause based on parameters. 
   3. Synapse Incremental Load - Load parquet file in ADLS Gen 2 into Synapse SQL pool tables utilizing an incremental load approach with a staging and target tables. 
-  4. Synapse Turncate Load - Load parquet file in ADLS Gen 2 into Synapse SQL pool tables utilizing truncate/load approach (small tables)
+  4. Synapse Truncate Load - Load parquet file in ADLS Gen 2 into Synapse SQL pool tables utilizing truncate/load approach (small tables)
 
 ## Asset List - These items will be created 
 	1. Azure Data Factory if the supplied name doesn't exist.  
