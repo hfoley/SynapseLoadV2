@@ -1,12 +1,20 @@
 
 # 02 ADF Create
-This folder contains 2 Powershell scripts and multiple json files.  
+This folder contains 2 Powershell scripts and multiple json files to create the components for the Azure Data Factory and pipelines.  This will deploy several pipeline patterns that are helpful in the building of an Azure data warehouse solution.  In my example I'm using these pipelines to extract data from SQL Server tables to parquet files in the Azure Data Lake.  I also have pipelines that will load from those parquet files into Azure Synapse SQL Pool tables.  All pipelines are metadata driven from tables inside a small Azure SQL Database.  This allows the pipelines to change with adjustments to SQL tables, not reworking of ETL pipelines.  I've also got one pipeline that includes a custom logging table to store pipeline execution data.  
+
+The architecture of the solution diagrammed below.  
+
+![alt text](https://github.com/hfoley/EDU/blob/master/images/Hope Synapse Load Pipeline Diagram.jpg?raw=true)
+
+Note:  I am using separate Azure Data Factory in this solution instead of pipelines inside the Synapse workspace as there haven't been any updates to allow for the creation of them via PowerShell.  Ping me on Twitter if you see any updates on that (https://twitter.com/hope_foley).  
+
+
 
 ## Asset List - These items will be created 
 	1. Azure Data Factory if the supplied name doesn't exist.  
 	2. 3 ADF linked services
-	3. 6 ADF datasets 
-	4. 3 ADF pipelines 
+	3. 7 ADF datasets 
+	4. 4 ADF pipelines 
 	
 	
 ## Steps 
