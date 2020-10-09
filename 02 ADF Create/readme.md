@@ -4,7 +4,7 @@ This folder contains 2 Powershell scripts and multiple json files to create the 
 
 The architecture of the solution diagrammed below.  
 
-![alt text]("https://github.com/hfoley/EDU/blob/master/images/Hope Synapse Load Pipeline Diagram.jpg?raw=true")
+![alt text](https://github.com/hfoley/EDU/blob/master/images/Hope%20Synapse%20Load%20Pipeline%20Diagram.jpg?raw=true)
 
 Note:  I am using separate Azure Data Factory in this solution instead of pipelines inside the Synapse workspace as there haven't been any updates to allow for the creation of them via PowerShell.  Ping me on Twitter if you see any updates on that (https://twitter.com/hope_foley).  
 
