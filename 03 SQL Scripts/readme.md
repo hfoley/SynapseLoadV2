@@ -1,12 +1,13 @@
 
 # 03 SQL Scripts
-This folder contains MetadataTablesCreate.sql and a Sample subfolder.  The MetadataTablesCreate.sql script will create 2 metadata tables and statements to insert data into them.  
+This folder contains MetadataTablesCreate.sql and a Sample subfolder.  The MetadataTablesCreate.sql script will create 3 metadata tables and statements to insert data into them.  
 
 ## Asset List - These items will be created 
 	1. ADF schema - can change based on your naming conventions
 	2. [ADF].[ExtractTables] - table that drives the SQL Date Based Extract pipeline and dictates which SQL Server tables are extracted and what timeframe to extract
 	3. [ADF].[MetadataLoad] - table that drives the other 2 ADF pipelines to load which parquet files and what tables to load them into within the Synapse sql pool 
-  	4. Optional sample scripts - there are sample source and target tables 
+  	4. [ADF].[PipelineLog] - table to capture metadata and parameter values from pipeline runs. 
+	5. Optional sample scripts - there are sample source and target tables contained in /Sample folder
 
 	
 ## Steps 
