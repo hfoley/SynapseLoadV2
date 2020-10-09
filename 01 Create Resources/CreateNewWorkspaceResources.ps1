@@ -1,22 +1,35 @@
 ﻿<# Update the variables section appropriately for your environment.  
-Update any reference to ***Change This*** in the variables #>
+This code checks for the exististence of the resource of that name first 
+and will skip if exists.  More details in documentation on variables 
+required below on github site. 
+
+Tips: Storage requires lowercase only in naming 
+Tips: Synapse SQL Pools have to be 15 or less characters 
+
+I have left some variables with values like the level of SQL Server for example. 
+I have these set to smallest levels of everything. Change if your needs vary 
+on those components.  
+ #>
+
+#
 $startTime = Get-Date
 $SubscriptionId = '<Azure subscription id>'
 $resourceGroupName = "<Resource group name>"
 $resourceGroupLocation = "<Resource group location>" 
 
-#SQL variables
-$azsqlserver = "<logical servername - bla.database.windows.net>"
+
+# SQL variables that point to the Azure SQL DB for metadata
+# If you specify names that do not exist, it will create them. 
+# If you specify names that already exist, it will skip creation.  
+
+$azsqlserver = "<logical servername becomes beginning of sql server - bla.database.windows.net>"
 $azsqlDB = "<sql database name>"
-$edition = "Standard"
-$ComputeGen = "Gen5"
+#edit levels below of SQL as needed commented out variables below can be used
+# if you prefer vcore pricing Azure SQL DB
+#$edition = "Standard"
+#$ComputeGen = "Gen5"
 $SerivceObjective = "S0"
 
-#ADLS 2
-$azstoragename2 = "<ADLS storage account name>"
-$containername2 = "<container name>" 
-$SKUName = "Standard_GRS"
-$storagekind = "StorageV2"
 
 #Synapse variables 
 $azsynapsename = "<Synapse workspace name>"
@@ -24,12 +37,22 @@ $azstoragename = "<ADLS storage for use with the Synapse workspace"
 $containername = "<container for the above storage>" 
 $SKUName = "Standard_GRS"
 $storagekind = "StorageV2"
+$ManagedVirtualNetwork = 'default'
+
 #Firewall to connect to Synapse workspace 
-$firewallrulename = "UserClientIP"
-#SQLPool 
+$firewallrulename = "<name of the firewall rule for your client IP>"
+#SQLPool - needs to be less than 15 characters
 $synapsepoolname = "<Synapse sql pool name>" 
 $perflevel = "DW100c" 
 
+#ADLS 2 - this will be the ADLS landing area for parquet files
+$azstoragename2 = "<ADLS storage account name>"
+$containername2 = "<container name>" 
+$SKUName = "Standard_GRS"
+$storagekind = "StorageV2"
+
+
+#####################variables below do not need updated
 
 Connect-AzAccount
 Select-AzSubscription -SubscriptionId $SubscriptionId
@@ -75,13 +98,10 @@ else
 $endTime = Get-Date
 write-host "Ended SQL Server and DB creation at " $endTime
 
-New-AzSqlServerFirewallRule -ResourceGroupName $resourceGroupName  -ServerName $azsqlserver -AllowAllAzureIPs
+New-AzSqlServerFirewallRule -ResourceGroupName $resourceGroupName  -ServerName $azsqlserver -AllowAllAzureIPs 
 
 $startTime = Get-Date
-#$azstoragename = "hopemadedisadls2"
-#$containername = "hopemadediscont2" 
-#$SKUName = "Standard_GRS"
-#$storagekind = "StorageV2"
+
 Write-Host "The Azure ADLS Gen 2 Storage creation script was started " $startTime
 
 $ADLSCheck = Get-AzStorageAccount -ResourceGroupName $resourceGroupName -Name $azstoragename2 -ErrorAction SilentlyContinue
@@ -125,7 +145,7 @@ $SynapseCheck =  Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -N
 if(-not $SynapseCheck)
     {
     Write-Host "Synapse workspace '$azsynapsename' doesn't exist and will be created"
-    New-AzSynapseWorkspace -ResourceGroupName $resourceGroupName -Name $azsynapsename -Location $resourceGroupLocation -DefaultDataLakeStorageAccountName $azstoragename -DefaultDataLakeStorageFilesystem $containername -SqlAdministratorLoginCredential (Get-Credential)
+    New-AzSynapseWorkspace -ResourceGroupName $resourceGroupName -Name $azsynapsename -Location $resourceGroupLocation -DefaultDataLakeStorageAccountName $azstoragename -DefaultDataLakeStorageFilesystem $containername -ManagedVirtualNetwork $ManagedVirtualNetwork -SqlAdministratorLoginCredential (Get-Credential)
     }
 else 
     {Write-Host "Synapse workspace '$azsynapsename'  already created"}
@@ -134,16 +154,13 @@ $endTime = Get-Date
 write-host "Ended Synapse workspace creation script at " $endTime
 
 $startTime = Get-Date
-#$firewallrulename = "HopeClientIP"
 
 
-#Add client IP to workspace 
-
-$clientip = Invoke-RestMethod http://ipinfo.io/json | Select -exp ip
+$clientip = Invoke-RestMethod http://ipinfo.io/json | Select-Object -exp ip
 
 
 $firewallrule = Get-AzSynapseFirewallRule -ResourceGroupName $resourceGroupName -WorkspaceName $azsynapsename
-$startip = $firewallrule.StartIpAddress
+#$startip = $firewallrule.StartIpAddress
 
 
 
@@ -161,8 +178,7 @@ write-host "Ended Synapse firewall rule creation script at " $endTime
 New-AzSynapseFirewallRule -WorkspaceName $azsynapsename -AllowAllAzureIP
 
 $startTime = Get-Date
-#$synapsepoolname = "hopemaddispool" 
-#$perflevel = "DW100c" 
+
 
 Write-Host "The Azure Synapse SQL Pool script was started " $startTime
 

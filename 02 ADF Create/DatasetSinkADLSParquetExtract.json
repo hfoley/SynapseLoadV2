@@ -1,5 +1,5 @@
 {
-    "name": "DestADLSParquet",
+    "name": "SinkADLSParquetExtract",
     "properties": {
         "linkedServiceName": {
             "referenceName": "ADLSGen2LnkSvr",
@@ -7,6 +7,9 @@
         },
         "parameters": {
             "DBName": {
+                "type": "string"
+            },
+            "TargetContainer": {
                 "type": "string"
             }
         },
@@ -16,10 +19,13 @@
             "location": {
                 "type": "AzureBlobFSLocation",
                 "fileName": {
-                    "value": "@{concat(concat('Parquet', dataset().DBName),utcnow('yyyy-MM-dd-HHmm'))}",
+                    "value": "@{concat(concat(concat('Parquet', dataset().DBName),utcnow('yyyy-MM-dd-HHmm')),'.parquet')}",
                     "type": "Expression"
                 },
-                "fileSystem": "highered"
+                "fileSystem": {
+                    "value": "@dataset().TargetContainer",
+                    "type": "Expression"
+                }
             },
             "compressionCodec": "snappy"
         },
