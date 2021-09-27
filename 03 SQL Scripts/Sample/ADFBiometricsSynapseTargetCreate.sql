@@ -38,3 +38,28 @@ WITH
 GO
 
 
+
+CREATE TABLE [ADF].[Biometrics_Stg]
+(
+	[Order] [float] NULL,
+	[Pen] [float] NULL,
+	[Animal] [float] NULL,
+	[Gender] [nvarchar](255) NULL,
+	[BirthDate] [datetime] NULL,
+	[Age_days] [float] NULL,
+	[Date] [datetime] NULL,
+	[WitherHeight] [float] NULL,
+	[HipHeight] [float] NULL,
+	[WidthHeight] [float] NULL,
+	[GirthCirc] [float] NULL,
+	[BCS] [float] NULL,
+	[BW] [float] NULL
+)
+WITH
+(
+	DISTRIBUTION = ROUND_ROBIN,
+	CLUSTERED COLUMNSTORE INDEX
+)
+GO
+
+
