@@ -5,7 +5,7 @@ This folder contains MetadataTablesCreate.sql.  The MetadataTablesCreate.sql scr
 	1. ADF schema - can change based on your naming conventions
 	2. [ADF].[ExtractTables] - table that drives the SQL Date Based Extract pipeline and dictates which SQL Server tables are extracted and what timeframe to extract
 	3. [ADF].[MetadataLoad] - table that drives the other 2 ADF pipelines to load which parquet files and what tables to load them into within the Synapse sql pool 
-  4. [ADF].[PipelineLog] - table to capture metadata and parameter values from pipeline runs. 
+  	4. [ADF].[PipelineLog] - table to capture metadata and parameter values from pipeline runs. 
 
 	
 ## Steps 
