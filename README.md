@@ -3,7 +3,7 @@ This solution is to help build the components of a modern data warehouse in Azur
 	
 The architecture of the solution diagrammed below.  
 
-![alt text](https://github.com/hfoley/EDU/blob/master/images/Hope%20Synapse%20Load%20V2%20version.jpg?raw=true)
+![alt text](https://github.com/hfoley/EDU/blob/master/images/SynapseLoadDiagram.jpg?raw=true)
 
 ## Asset List - These items will be created in your Azure subscription 
 	1. Azure Resource Group
