@@ -1,5 +1,5 @@
 # Synapse Load Solution - V2 
-This solution is to help build the components of a modern data warehouse in Azure including some Azure Data Factory metadata driven extract and load pipelines.  This version builds on the previous solution that focused on the pipelines to load parquet files into what was at the time called Azure SQL DW at https://aka.ms/SynapseLoad.  I will keep the version at that link as a GA service version.  I'll only use GA versions of the services in that version.  This V2 version here will contain as many items as I can automate with PowerShell utilizing the new Azure Synapse Analytics (workspace preview) https://docs.microsoft.com/en-us/azure/synapse-analytics/overview-what-is.  I have also enhanced this version to contain a pipeline to extract SQL tables to parquet in a time based fashion.  
+This solution contains code to help build the components of an Azure Synapse Analytics including some metadata driven extract and load pipelines. This solution contains PowerShell, SQL scripts, and json files to build out all the components below.   
 	
 The architecture of the solution diagrammed below.  
 
@@ -7,19 +7,19 @@ The architecture of the solution diagrammed below.
 
 ## Asset List - These items will be created in your Azure subscription 
 	1. Azure Resource Group
-	2. Azure SQL Database - metadata tables location 
+	2. Azure SQL Server & Database - metadata tables location 
 	3. Azure Data Lake Gen 2 - location to land extracted parquet files 
-	4. Azure Data Factory - pipelines to extract data 
-	5. Azure Synapse Workspace - new environment for anayltics 
-	6. Azure Synapse SQL Pool - destination to load parquet extracted files 
-	7. Azure SQL DB metadata tables to drive ADF pipelines
-	8. Azure Data Factory - SQL Date Based Extract pipeline - extracts data from SQL Server tables specified (example uses Azure SQL DB created or specified) 
-	9. Azure Data Factory - Synapse Incremental Load pipeline - parameter/metadata driven pipeline that does incremental load into Synapse SQL pool staging/target tables
-	10. Azure Data Factory - Synapse Truncate Load pipeline - parameter/metadata driven pipeline that does truncate/reload pattern into Synapse SQL pool only target tables
+	4. Azure Synapse Workspace - workspace where pipelines and SQL dedicated pool will live
+	5. Azure Synapse dedicated SQL Pool - destination to load parquet extracted files 
+	6. Azure SQL DB metadata tables to drive Synapse pipelines
+	7. Azure Synapse - SQL Date Based Extract pipeline - extracts data from SQL Server tables specified (example uses Azure SQL DB created or specified) by a date rante
+	8. Azure Synapse - SQL Date Not Date Based Extract pipeline - extracts data from SQL Server tables specified (example uses Azure SQL DB created or specified) by a specified value 
+	9. Azure Synapse - Synapse Incremental Load pipeline - parameter/metadata driven pipeline that does incremental load into Synapse SQL pool staging/target tables
+	10. Azure Synapse - Synapse Truncate Load pipeline - parameter/metadata driven pipeline that does truncate/reload pattern into Synapse SQL pool only target tables
 	
 * [01 Create Resources](https://github.com/hfoley/SynapseLoadV2/tree/master/01%20Create%20Resources)   - contains PowerShell scripts to build all the Azure components in the solution. 
-* [02 ADF Create](https://github.com/hfoley/SynapseLoadV2/tree/master/02%20ADF%20Create)   - contains powershell script and json files needed to build Azure Data Factory pipelines and other components.    
-* [03 SQL Scripts](https://github.com/hfoley/SynapseLoadV2/tree/master/03%20SQL%20Scripts)  - contains the SQL Server script to create the metadata tables and insert data on your Azure SQL DB.  There's also a subdirectory [Sample](https://github.com/hfoley/SynapseLoadV2/tree/master/03%20SQL%20Scripts/Sample) if you'd like to use sample files instead of using your own tables.  
+* [02 SQL Scripts](https://github.com/hfoley/SynapseLoadV2/tree/master/02%20SQL%20Scripts)   - contains the SQL Server script to create the metadata tables and insert data in your Azure SQL DB.  
+* [03 SQL Scripts](https://github.com/hfoley/SynapseLoadV2/tree/master/03%20Sample)  - contains all the files if you'd like to setup a sample source/destination.  
 	
 
 ## Pre-reqs
@@ -42,9 +42,9 @@ Each folder contains PowerShell and/or SQL scripts you'll need to update for you
 
 1. Start here to create Azure resources above >> [01 Create Resources](https://github.com/hfoley/SynapseLoadV2/tree/master/01%20Create%20Resources) 
 
-2. Start here to only want to create the Azure Data Factory components >> [02 ADF Create](https://github.com/hfoley/SynapseLoadV2/tree/master/02%20ADF%20Create).  
+2. Here's the location containing the script to create the SQL metadata tables >> [02 ADF Create](https://github.com/hfoley/SynapseLoadV2/tree/master/02%20ADF%20Create).  
 
-3. Start here if you only need to create the metadata tables >> [03 SQL Scripts](https://github.com/hfoley/SynapseLoadV2/tree/master/03%20SQL%20Scripts)
+3. Start here if you want to build the solution using a sample source/destination >> [03 Sample](https://github.com/hfoley/SynapseLoadV2/tree/master/03%20Sample)
 
 
 
