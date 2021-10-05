@@ -1,5 +1,5 @@
 # Synapse Load Solution - V2 
-This solution contains code to help build the components of an Azure Synapse Analytics including some metadata driven extract and load pipelines. This solution contains PowerShell, SQL scripts, and json files to build out all the components below.   
+This solution contains code to help build the components of an Azure Synapse Analytics environment including metadata tables and some metadata driven extract and load pipelines. This solution contains PowerShell, SQL scripts, and json files to build out all the components listed below.   
 	
 The architecture of the solution diagrammed below.  
 
@@ -23,19 +23,12 @@ The architecture of the solution diagrammed below.
 	
 
 ## Pre-reqs
-1. Need to have at least PowerShell 5.1 installed.  You can check this by running the following script. 
+1. You can run them locally or via Azure CLI(https://docs.microsoft.com/en-us/cli/azure/what-is-azure-cli)/Azure Cloud Shell(https://docs.microsoft.com/en-us/azure/cloud-shell/overview).  I've done a blog post to help get setup to run the scripts at (https://hopefoley.com/2021/09/27/powershell-in-the-clouds/).  
+2. You can run locally as well.  Need to have at least PowerShell 5.1 installed.  You can check this by running the following script. 
 	$PSVersionTable.PSVersion
-2. Install Powershell AZ package.  This solution has been tested with 4.3.0.  You can find info on installing this at https://www.powershellgallery.com/packages/Az/
-3. You may also need addtional modules as well like Az.DataFactory (https://www.powershellgallery.com/packages/Az.DataFactory) and Az.Synapse (https://www.powershellgallery.com/packages/Az.Synapse).  These commands below can help you determine if you have these components. I have tested this with Az.DataFactory 1.8.2 and Az.Synapse 0.1.2.  
+2. You can use the 00 - PreReqCheck.ps1 (https://github.com/hfoley/SynapseLoadV2/blob/master/00%20-%20PreReqCheck.ps1) script to check for the necessary modules.  
 
-	```powershell
-	$PSVersionTable.PSVersion
 
-	Get-InstalledModule -Name Az -AllVersions | Select-Object -Property Name, Version
-
-	Get-Module -Name Az.Sy* -ListAvailable
-	Get-Module -Name Az.DataF* -ListAvailable
-	```
 
 ## Steps 
 Each folder contains PowerShell and/or SQL scripts you'll need to update for your environment.  Further details on the files are in the readme of each section.  
