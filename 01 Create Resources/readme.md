@@ -1,5 +1,31 @@
 # 01 Create Resources
-This folder contains the CreateNewWorkspaceResources.ps1 file.  This PowerShell script will create all the components to use in your Azure Subscription.  
+This folder contains the files you'll need to create all the components for the solution.  The only file you need to update is the paramfile01.json.  All the scripts use this file to drive the names, locations, ect. to build it out in your environment.  Make sure you have rights to create resources in your Azure subscription.  You can use existing resources for this solution.  The script will check for it's existence first, before creating it.  
+
+## File List - These items will be created in your Azure subscription
+
+Filename  | Description
+------------- | -------------
+01 - CreateSynLoadResources.ps1  | Creates all the items in Azure subscription
+02 - SynLoadGrantRights.ps1 | Will grant rights to MSI and the admin AAD account to storage
+03 - CreateSynLoadPipelineParts.ps1 | Will create the pipelines and related items in Synapse workspace
+LinkedServiceADLS.json | Json file for creation of the linked server pointing to ADLS Gen 2 (azstorage2 in paramfile01.json)
+
+6. **ADLSGen2LinkedService.json** -   You will need to update the url property to point to the Azure Data Lake Storage.  
+7. **AzureSQLDBLinkedService.json** - Json file tied to the creation of the linked server pointing to SQL DB in ADF
+8. **SynapseLinkedService.json** - Json file tied to the creation of the linked server pointing to Synapse in ADF
+9. DatasetSinkSynapse.json - Json file tied to the creation of the sink dataset in ADF pointing to Synapse destination
+10. DatasetSQLMetadataLoad.json - Json file tied to the creation of dataset in ADF pointing to Azure SQL metadata table 
+11. DatasetSrcADLSFileLoad.json - Json file tied to the creation of the source dataset in ADF pointing to ADLS Gen 2 parquet files
+12. IncrementalPipelineCreate.json - Json file tied to the creation of the incremental pipeline in ADF 
+13. Truncate Load Synapse.json - Json file tied to the creation of the truncate/reload pipeline in ADF 
+
+
+## Steps 
+1. Update the paramfile.json with the values you want to use for the rest of the scripts.  Storage is finicky in the rules it has for naming.  Keep storage params lowercase and under 15 characters.    
+3. Run the 01 - CreateResources.ps1 file and supply the param file location.  You'll be prompted for your login credentials to Azure.  You'll also be prompted for a username and password.  This will be your Synapse admin login.  Below is some sample syntax to run the file and pass the paramfile.  Keep all your script and json files in the same folder location.  
+
+    & "C:\PSScripts\01 - CreateResources.ps1" -filepath "C:\PSScripts\paramfile.json"
+4. Run the 02 - GrantStorageRights.ps1.  You'll again be prompted for login to Azure.  This script will assign the rights needed to the ADLS storage account.  It will grant your account (or the admin user provided in the paramfile) to the role Storage Blob Data Contributor role on the ADLS account.  Below is a sample syntax.  
 
 ## Asset List - These items will be created in your Azure subscription
 	1. Azure Resource Group
