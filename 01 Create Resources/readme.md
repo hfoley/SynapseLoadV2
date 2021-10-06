@@ -15,7 +15,7 @@ DatasetLookupMetadataExtract.json | Json file tied to creation of dataset to pul
 DatasetLookupMetadataLoad.json | Json file tied to creation of dataset to pull metadata for tables to load
 DatasetSinkADLSParquetExtract.json | Json file tied to creation of dataset to land parquet files
 DatasetSinkSQLLogTable.json | Json file tied to creation of dataset to the custom logging table in Azure SQL DB
-DatasetSinkSynapse.json Json file tied to creation of dataset to dedicated sql pool tables
+DatasetSinkSynapse.json | Json file tied to creation of dataset to dedicated sql pool tables
 DatasetSrcADLSFileLoad.json | Json file tied to creation of dataset to point to ADLS parquet files to load
 DatasetSrcSQLTableExtract.json | Json file tied to creation of dataset for the source SQL tables
 IncrePipelineCreate.json | Json file tied to the creation of the incremental pipeline  
