@@ -5,19 +5,23 @@ This folder contains the files you'll need to create all the components for the 
 
 Filename  | Description
 ------------- | -------------
+paramfile01.json | Parameter file that needs to be updated prior to running scripts
 01 - CreateSynLoadResources.ps1  | Creates all the items in Azure subscription
 02 - SynLoadGrantRights.ps1 | Will grant rights to MSI and the admin AAD account to storage
 03 - CreateSynLoadPipelineParts.ps1 | Will create the pipelines and related items in Synapse workspace
 LinkedServiceADLS.json | Json file for creation of the linked server pointing to ADLS Gen 2 (azstorage2 in paramfile01.json)
-
-6. **ADLSGen2LinkedService.json** -   You will need to update the url property to point to the Azure Data Lake Storage.  
-7. **AzureSQLDBLinkedService.json** - Json file tied to the creation of the linked server pointing to SQL DB in ADF
-8. **SynapseLinkedService.json** - Json file tied to the creation of the linked server pointing to Synapse in ADF
-9. DatasetSinkSynapse.json - Json file tied to the creation of the sink dataset in ADF pointing to Synapse destination
-10. DatasetSQLMetadataLoad.json - Json file tied to the creation of dataset in ADF pointing to Azure SQL metadata table 
-11. DatasetSrcADLSFileLoad.json - Json file tied to the creation of the source dataset in ADF pointing to ADLS Gen 2 parquet files
-12. IncrementalPipelineCreate.json - Json file tied to the creation of the incremental pipeline in ADF 
-13. Truncate Load Synapse.json - Json file tied to the creation of the truncate/reload pipeline in ADF 
+LinkedServiceAzureSQLDB.json | Json file tied to the creation of the linked server pointing to Azure SQL DB 
+DatasetLookupMetadataExtract.json | Json file tied to creation of dataset to pull metadata for tables to extract
+DatasetLookupMetadataLoad.json | Json file tied to creation of dataset to pull metadata for tables to load
+DatasetSinkADLSParquetExtract.json | Json file tied to creation of dataset to land parquet files
+DatasetSinkSQLLogTable.json | Json file tied to creation of dataset to the custom logging table in Azure SQL DB
+DatasetSinkSynapse.json Json file tied to creation of dataset to dedicated sql pool tables
+DatasetSrcADLSFileLoad.json | Json file tied to creation of dataset to point to ADLS parquet files to load
+DatasetSrcSQLTableExtract.json | Json file tied to creation of dataset for the source SQL tables
+IncrePipelineCreate.json | Json file tied to the creation of the incremental pipeline  
+Pipeline Truncate Load Synapse.json | Json file tied to the creation of the truncate/reload pipeline
+PL SQL Date Based Extract.json | Json file tied to the creation of the date range extract pipeline
+PL SQL Not Date Based Extract.json | Json file tied to the creation of the column value pull pipeline
 
 
 ## Steps 
