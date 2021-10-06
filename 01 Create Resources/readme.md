@@ -32,12 +32,17 @@ PL SQL Not Date Based Extract.json | Json file tied to the creation of the colum
 4. Run the 02 - GrantStorageRights.ps1.  You'll again be prompted for login to Azure.  This script will assign the rights needed to the ADLS storage account.  It will grant your account (or the admin user provided in the paramfile) to the role Storage Blob Data Contributor role on the ADLS account.  Below is a sample syntax.  
 
 ## Asset List - These items will be created in your Azure subscription
-	1. Azure Resource Group
-	2. Azure SQL Database - metadata tables location 
-	3. Azure Data Lake Gen 2 - location to land extracted parquet files 
-	4. Azure Data Factory - pipelines to extract data 
-	5. Azure Synapse Workspace - new environment for anayltics 
-	6. Azure Synapse SQL Pool - destination to load parquet extracted files 
+1. Azure Resource Group
+2. Azure SQL Server & Database - metadata tables location 
+3. 2 - Azure Data Lake Gen 2 accounts - one account for system use with Synapse, one for data lake and location to land extracted parquet files 
+4. Azure Synapse Workspace - workspace where pipelines and SQL dedicated pool will live
+5. Azure Synapse dedicated SQL Pool - destination to load parquet extracted files 
+6. Azure SQL DB metadata tables to drive Synapse pipelines
+7. Azure Synapse - SQL Date Based Extract pipeline - extracts data from SQL Server tables specified (example uses Azure SQL DB created or specified) by a date rante
+8. Azure Synapse - SQL Date Not Date Based Extract pipeline - extracts data from SQL Server tables specified (example uses Azure SQL DB created or specified) by a specified value 
+9. Azure Synapse - Synapse Incremental Load pipeline - parameter/metadata driven pipeline that does incremental load into Synapse SQL pool staging/target tables
+10. Azure Synapse - Synapse Truncate Load pipeline - parameter/metadata driven pipeline that does truncate/reload pattern into Synapse SQL pool only target tables
+
 	
 ## Steps 
   1. Download CreateNewWorkspaceResources.ps1 and store it locally.  
