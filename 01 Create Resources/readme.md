@@ -1,5 +1,6 @@
 # 01 Create Resources
-This folder contains the files you'll need to create all the components for the solution.  The only file you need to update is the paramfile01.json.  All the scripts use this file to drive the names, locations, ect. to build it out in your environment.  Make sure you have rights to create resources in your Azure subscription.  You can use existing resources for this solution.  The script will check for it's existence first, before creating it.  
+This folder contains the files you'll need to create all the components for the solution.  The only file you need to update is the paramfile01.json.  All the scripts use this file to drive the names, locations, ect. to build it out in your environment.  Make sure you have rights to create resources in your Azure subscription.  You can use existing resources for this solution.  The script will check for it's existence first, before creating it.  IMPORTANT: If you create a new dedicated SQL pool, it will begin running.  Make sure to PAUSE the dedicated SQL pool when you're not using it.  HOPE WARNING: DON'T WASTE $$ in Azure on it accidentally.  
+
 
 ## File List - These items will be created in your Azure subscription
 
@@ -25,11 +26,19 @@ PL SQL Not Date Based Extract.json | Json file tied to the creation of the colum
 
 
 ## Steps 
-1. Update the paramfile.json with the values you want to use for the rest of the scripts.  Storage is finicky in the rules it has for naming.  Keep storage params lowercase and under 15 characters.    
-3. Run the 01 - CreateResources.ps1 file and supply the param file location.  You'll be prompted for your login credentials to Azure.  You'll also be prompted for a username and password.  This will be your Synapse admin login.  Below is some sample syntax to run the file and pass the paramfile.  Keep all your script and json files in the same folder location.  
-
-    & "C:\PSScripts\01 - CreateResources.ps1" -filepath "C:\PSScripts\paramfile.json"
-4. Run the 02 - GrantStorageRights.ps1.  You'll again be prompted for login to Azure.  This script will assign the rights needed to the ADLS storage account.  It will grant your account (or the admin user provided in the paramfile) to the role Storage Blob Data Contributor role on the ADLS account.  Below is a sample syntax.  
+1. Download the files locally or to storage account fileshare used for CLI (see https://hopefoley.com/2021/09/27/powershell-in-the-clouds/ for help setting up). If you're setting up the sample, you can skip to [03 SQL Scripts](https://github.com/hfoley/SynapseLoadV2/tree/master/03%20Sample).  This contains all the files needed in that location.  
+1. Update the paramfile01.json with the values you want to use for the rest of the scripts.  Storage is finicky in the rules it has for naming.  Keep storage params lowercase and under 15 characters.  You will need to replace any values containing <text>.  Anything without <> surrounding it is optional to change.  
+2. Run the 01 - CreateSynLoadResources.ps1 script and supply the param file location.  You'll be prompted for your login credentials to Azure.  You'll also be prompted 2 times for a username and password.  This will become your Azure SQL DB SQL admin and Synapse workspace SQL admin login and password.  Below is some sample syntax to run the file and pass the paramfile within Azure CLI and locally.  Keep all your scripts, paramfile01.json and all json files in the same folder location.  
+  Azure CLI:  ./"01 - CreateSynLoadResources.ps1" -filepath ./paramfile01.json
+  Locally:  & "C:\folder\01 - CreateSynLoadResources.ps1" -filepath "C:\folder\paramfile01.json"
+3. Run the 02 - SynLoadGrantRights.ps1 script.  You'll again be prompted for login to Azure.  This script will assign the rights needed to the ADLS storage account.  It will grant your account (or the admin user provided in the paramfile) to the role Storage Blob Data Contributor role on the ADLS account.  Below is a sample syntax.  
+  Azure CLI:  ./"02 - SynLoadGrantRights.ps1" -filepath ./paramfile01.json
+  Locally:  & "C:\folder\02 - SynLoadGrantRights.ps1" -filepath "C:\folder\paramfile01.json"
+4. Run the 03 - CreateSynLoadPipelineParts.ps1 script.  You'll again be prompted for login to Azure.  This script will create the items within the Synapse workspace to build the pipelines.  It will create linked services, datasets, and pipelines.  Below is a sample syntax.  
+  Azure CLI:  ./"03 - CreateSynLoadPipelineParts.ps1" -filepath ./paramfile01.json
+  Locally:  & "C:\folder\03 - CreateSynLoadPipelineParts.ps1" -filepath "C:\folder\paramfile01.json"
+6. Navigate to the Synapse workspace and open up Synapse Studio.  Navigate to the manage pane (far left toolbox icon).  Select Linked Services and find the linked service for your Azure SQL DB.  Update the values required and supply your credentials and verify connectivity by hitting the Test Connection button (you'll need to enable the IR for this)
+7. Move to [02 SQL Scripts](https://github.com/hfoley/SynapseLoadV2/tree/master/02%20SQL%20Scripts) to setup the metadata tables based on your own sources. 
 
 ## Asset List - These items will be created in your Azure subscription
 1. Azure Resource Group
@@ -44,15 +53,4 @@ PL SQL Not Date Based Extract.json | Json file tied to the creation of the colum
 10. Azure Synapse - Synapse Truncate Load pipeline - parameter/metadata driven pipeline that does truncate/reload pattern into Synapse SQL pool only target tables
 
 	
-## Steps 
-  1. Download CreateNewWorkspaceResources.ps1 and store it locally.  
-  2. Edit the script variables needed in the top section.  Anything needing updated will be contained within <> and a description of what the variable drives within them.  Replace the <text> portion to the names/values for your environment.  
-  3. Save and run the script.
-  4. Validate all services create successfully. 
-  5. Move to [02 ADF Create](https://github.com/hfoley/SynapseLoadV2/tree/master/02%20ADF%20Create)
-  
-## What happens 
-  1. You'll be prompted to login to Azure as user with rights to create services. 
-  2. You'll be prompted 2 times for a userid and password.  This user id and password will become your SQL Server Admin of the Azure SQL DB and the Azure Synapse SQL pool.  
-  
   
