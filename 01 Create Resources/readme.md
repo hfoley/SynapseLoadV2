@@ -26,7 +26,7 @@ PL SQL Not Date Based Extract.json | Json file tied to the creation of the colum
 
 
 ## Steps 
-1. Download the files locally or to storage account fileshare used for CLI (see https://hopefoley.com/2021/09/27/powershell-in-the-clouds/ for help setting up). If you're setting up the sample, you can skip to [03 SQL Scripts](https://github.com/hfoley/SynapseLoadV2/tree/master/03%20Sample).  This contains all the files needed in that location.  
+1. Download the files locally or to storage account fileshare used for CLI (see https://hopefoley.com/2021/09/27/powershell-in-the-clouds/ for help setting up). If you're setting up the sample, you can skip to [03 Sample](https://github.com/hfoley/SynapseLoadV2/tree/master/03%20Sample).  This contains all the files needed in that location.  
 1. Update the paramfile01.json with the values you want to use for the rest of the scripts.  Storage is finicky in the rules it has for naming.  Keep storage params lowercase and under 15 characters.  You will need to replace any values containing <text>.  Anything without <> surrounding it is optional to change.  
 2. Run the 01 - CreateSynLoadResources.ps1 script and supply the param file location.  You'll be prompted for your login credentials to Azure.  You'll also be prompted 2 times for a username and password.  This will become your Azure SQL DB SQL admin and Synapse workspace SQL admin login and password.  Below is some sample syntax to run the file and pass the paramfile within Azure CLI and locally.  Keep all your scripts, paramfile01.json and all json files in the same folder location.  
   Azure CLI:  ./"01 - CreateSynLoadResources.ps1" -filepath ./paramfile01.json
