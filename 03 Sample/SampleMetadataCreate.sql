@@ -74,6 +74,7 @@ INSERT [ADF].[ExtractTables] ([DBName], [TargetTableSchema], [TableName], [DateC
 (N'<sql db name>', N'COW', N'Biometrics', N'BirthDate', CAST(N'2019-02-18' AS Date), CAST(N'2019-02-22' AS Date), N'cow', 1)
 
 --Biometrics sample insert
+--****Update the filename value to one extracted to ADLS
 INSERT INTO [ADF].[MetadataLoad]
            ([FileName]
            ,[BlobContainer]
@@ -83,7 +84,7 @@ INSERT INTO [ADF].[MetadataLoad]
            ,[ColumnKey])
      VALUES
            ('ParquetBiometrics2021-10-02-1959.parquet'
-           ,'cow'
+           ,'COW'
 		   ,'COW'
            ,'Biometrics_Stg'
            ,'Biometrics'
