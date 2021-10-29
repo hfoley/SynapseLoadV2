@@ -33,11 +33,10 @@ The architecture of the solution diagrammed below.
 ## Steps 
 Each folder contains PowerShell and/or SQL scripts you'll need to update for your environment.  Further details on the files are in the readme of each section.  
 
-1. Start here to create Azure resources above >> [01 Create Resources](https://github.com/hfoley/SynapseLoadV2/tree/master/01%20Create%20Resources) 
+1. Start here if you want to build the solution using a sample source/destination >> [03 Sample](https://github.com/hfoley/SynapseLoadV2/tree/master/03%20Sample)
+2. Start here to just create Azure resources above >> [01 Create Resources](https://github.com/hfoley/SynapseLoadV2/tree/master/01%20Create%20Resources) 
+3. Here's the location containing the script to create the SQL metadata tables >> [02 ADF Create](https://github.com/hfoley/SynapseLoadV2/tree/master/02%20ADF%20Create).  
 
-2. Here's the location containing the script to create the SQL metadata tables >> [02 ADF Create](https://github.com/hfoley/SynapseLoadV2/tree/master/02%20ADF%20Create).  
-
-3. Start here if you want to build the solution using a sample source/destination >> [03 Sample](https://github.com/hfoley/SynapseLoadV2/tree/master/03%20Sample)
 
 
 
