@@ -25,6 +25,7 @@ PL SQL Not Date Based Extract.json | Json file tied to the creation of the colum
 CowBiometricsSampleSource.sql | SQL script to create a sample COW.Biometrics table to use as a source table to extract
 SampleMetadataCreate.sql | SQL script to create the metadata and logging tables including insert statements
 COWBiometricsSynapseTargetCreate.sql | SQL script to create the destination tables in dedicated SQL pool to load parquet files
+DemoWatchSynapseLoadTables.sql | SQL script you can use to view data flowing into dedicated SQL pool
 
 
 ## Azure Asset List - These items will be created in your Azure subscription
