@@ -35,7 +35,7 @@ DemoWatchSynapseLoadTables.sql | SQL script you can use to view data flowing int
 4. Azure Synapse Workspace - workspace where pipelines and SQL dedicated pool will live
 5. Azure Synapse dedicated SQL Pool - destination to load parquet extracted files 
 6. Azure SQL DB metadata tables to drive Synapse pipelines
-7. Azure Synapse - SQL Date Based Extract pipeline - extracts data from SQL Server tables specified (example uses Azure SQL DB created or specified) by a date rante
+7. Azure Synapse - SQL Date Based Extract pipeline - extracts data from SQL Server tables specified (example uses Azure SQL DB created or specified) by a date range
 8. Azure Synapse - SQL Date Not Date Based Extract pipeline - extracts data from SQL Server tables specified (example uses Azure SQL DB created or specified) by a specified value 
 9. Azure Synapse - Synapse Incremental Load pipeline - parameter/metadata driven pipeline that does incremental load into Synapse SQL pool staging/target tables
 10. Azure Synapse - Synapse Truncate Load pipeline - parameter/metadata driven pipeline that does truncate/reload pattern into Synapse SQL pool only target tables
