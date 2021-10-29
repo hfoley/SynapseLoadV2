@@ -42,14 +42,14 @@ COWBiometricsSynapseTargetCreate.sql | SQL script to create the destination tabl
 
 
 ## Azure SQL DB Asset List - These items will be created 
-	1. ADF schema - can change based on your naming conventions
+	1. [ADF] schema - can change based on your naming conventions
 	2. [ADF].[ExtractTables] - table that drives the SQL Date Based Extract pipeline and dictates which SQL Server tables are extracted and what timeframe to extract
 	3. [ADF].[MetadataLoad] - table that drives the other 2 ADF pipelines to load which parquet files and what tables to load them into within the Synapse sql pool 
   	4. [ADF].[PipelineLog] - table to capture metadata and parameter values from pipeline runs. 
 	5. [COW].[Biometrics] - sample source table 
 		
 ## Azure Synapse Dedicated SQL Pool Asset List - These items will be created 
-	1. COW schema - can change based on your naming conventions
+	1. [COW] schema - can change based on your naming conventions
 	2. [COW].[Biometrics] - final destination table to load parquet files into in SQL dedicated pool
 	3. [COW].[Biometrics_Stg] - staging destination table to load parquet files for use with incremental load pattern 
 
