@@ -27,26 +27,26 @@ PL SQL Not Date Based Extract.json | Json file tied to the creation of the colum
 
 ## Steps 
 1. Download the files locally or to storage account fileshare used for CLI (see https://hopefoley.com/2021/09/27/powershell-in-the-clouds/ for help setting up). If you're setting up the sample, you can skip to [03 Sample](https://github.com/hfoley/SynapseLoadV2/tree/master/03%20Sample).  This contains all the files needed in that location.  
-1. Update the paramfile01.json with the values you want to use for the rest of the scripts.  Storage is finicky in the rules it has for naming.  Keep storage params lowercase and under 15 characters.  You will need to replace the < > and all the text between it.  Anything without <> surrounding it is optional to change.  If you supply names for existing resources, it will check for it first and then skip if it already exists.  
-2. Run the 01 - CreateSynLoadResources.ps1 script and supply the param file location.  You'll be prompted for your login credentials to Azure.  You'll also be prompted 2 times for a username and password.  This will become your Azure SQL DB SQL admin and Synapse workspace SQL admin login and password.  Below is some sample syntax to run the file and pass the paramfile within Azure CLI and locally.  Keep all your scripts, paramfile01.json and all json files in the same folder location.  
+2. Update the paramfile01.json with the values you want to use for the rest of the scripts.  Storage is finicky in the rules it has for naming.  Keep storage params lowercase and under 15 characters.  You will need to replace the < > and all the text between it.  Anything without <> surrounding it is optional to change.  If you supply names for existing resources, it will check for it first and then skip if it already exists.  
+3. Run the 01 - CreateSynLoadResources.ps1 script and supply the param file location.  You'll be prompted for your login credentials to Azure.  You'll also be prompted 2 times for a username and password.  This will become your Azure SQL DB SQL admin and Synapse workspace SQL admin login and password.  Below is some sample syntax to run the file and pass the paramfile within Azure CLI and locally.  Keep all your scripts, paramfile01.json and all json files in the same folder location.  
   
   Azure CLI:  `./"01 - CreateSynLoadResources.ps1" -filepath ./paramfile01.json`
   
   Locally:  `& "C:\folder\01 - CreateSynLoadResources.ps1" -filepath "C:\folder\paramfile01.json"`
   
-3. Run the 02 - SynLoadGrantRights.ps1 script.  You'll again be prompted for login to Azure.  This script will assign the rights needed to the ADLS storage account.  It will grant your account (or the admin user provided in the paramfile) to the role Storage Blob Data Contributor role on the ADLS account.  Below is a sample syntax.  
+4. Run the 02 - SynLoadGrantRights.ps1 script.  You'll again be prompted for login to Azure.  This script will assign the rights needed to the ADLS storage account.  It will grant your account (or the admin user provided in the paramfile) to the role Storage Blob Data Contributor role on the ADLS account.  Below is a sample syntax.  
   Azure CLI:  `./"02 - SynLoadGrantRights.ps1" -filepath ./paramfile01.json`
   
   Locally:  `& "C:\folder\02 - SynLoadGrantRights.ps1" -filepath "C:\folder\paramfile01.json"`
   
-4. Run the 03 - CreateSynLoadPipelineParts.ps1 script.  You'll again be prompted for login to Azure.  This script will create the items within the Synapse workspace to build the pipelines.  It will create linked services, datasets, and pipelines.  Below is a sample syntax.  
+5. Run the 03 - CreateSynLoadPipelineParts.ps1 script.  You'll again be prompted for login to Azure.  This script will create the items within the Synapse workspace to build the pipelines.  It will create linked services, datasets, and pipelines.  Below is a sample syntax.  
 
   Azure CLI:  `./"03 - CreateSynLoadPipelineParts.ps1" -filepath ./paramfile01.json`
   
   Locally:  `& "C:\folder\03 - CreateSynLoadPipelineParts.ps1" -filepath "C:\folder\paramfile01.json"`
   
-5. Navigate to the Synapse workspace and open up Synapse Studio.  Navigate to the manage pane (far left toolbox icon).  Select Linked Services and find the linked service for your Azure SQL DB.  Update the values required and supply your credentials and verify connectivity by hitting the Test Connection button (you'll need to enable the IR for this)
-6. Move to [02 SQL Scripts](https://github.com/hfoley/SynapseLoadV2/tree/master/02%20SQL%20Scripts) to setup the metadata tables based on your own sources. 
+6. Navigate to the Synapse workspace and open up Synapse Studio.  Navigate to the manage pane (far left toolbox icon).  Select Linked Services and find the linked service for your Azure SQL DB.  Update the values required and supply your credentials and verify connectivity by hitting the Test Connection button (you'll need to enable the IR for this)
+7. Move to [02 SQL Scripts](https://github.com/hfoley/SynapseLoadV2/tree/master/02%20SQL%20Scripts) to setup the metadata tables based on your own sources. 
 
 ## Asset List - These items will be created in your Azure subscription
 1. Azure Resource Group
