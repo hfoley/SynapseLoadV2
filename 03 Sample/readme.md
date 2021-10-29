@@ -59,14 +59,14 @@ DemoWatchSynapseLoadTables.sql | SQL script you can use to view data flowing int
 1. Download all the files locally or to storage account fileshare used for CLI (see https://hopefoley.com/2021/09/27/powershell-in-the-clouds/ for help setting up).  Keep all the files in one folder location.   
 1. Update the paramfile01.json with the values you want to use for the rest of the scripts.  Storage is finicky in the rules it has for naming.  Keep storage params lowercase and under 15 characters.  You will need to replace any values containing <text>.  Anything without <> surrounding it is optional to change.  
 2. Run the 01 - CreateSynLoadResources.ps1 script and supply the param file location.  You'll be prompted for your login credentials to Azure.  You'll also be prompted 2 times for a username and password.  This will become your Azure SQL DB SQL admin and Synapse workspace SQL admin login and password.  Below is some sample syntax to run the file and pass the paramfile within Azure CLI and locally.  Keep all your scripts, paramfile01.json and all json files in the same folder location.  
-  Azure CLI:  ./"01 - CreateSynLoadResources.ps1" -filepath ./paramfile01.json
-  Locally:  & "C:\folder\01 - CreateSynLoadResources.ps1" -filepath "C:\folder\paramfile01.json"
+  Azure CLI:  `./"01 - CreateSynLoadResources.ps1" -filepath ./paramfile01.json`
+  Locally:  `& "C:\folder\01 - CreateSynLoadResources.ps1" -filepath "C:\folder\paramfile01.json"`
 3. Run the 02 - SynLoadGrantRights.ps1 script.  You'll again be prompted for login to Azure.  This script will assign the rights needed to the ADLS storage account.  It will grant your account (or the admin user provided in the paramfile) to the role Storage Blob Data Contributor role on the ADLS account.  Below is a sample syntax.  
-  Azure CLI:  ./"02 - SynLoadGrantRights.ps1" -filepath ./paramfile01.json
-  Locally:  & "C:\folder\02 - SynLoadGrantRights.ps1" -filepath "C:\folder\paramfile01.json"
+  Azure CLI:  `./"02 - SynLoadGrantRights.ps1" -filepath ./paramfile01.json`
+  Locally:  `& "C:\folder\02 - SynLoadGrantRights.ps1" -filepath "C:\folder\paramfile01.json"`
 4. Run the 03 - CreateSynLoadPipelineParts.ps1 script.  You'll again be prompted for login to Azure.  This script will create the items within the Synapse workspace to build the pipelines.  It will create linked services, datasets, and pipelines.  Below is a sample syntax.  
-  Azure CLI:  ./"03 - CreateSynLoadPipelineParts.ps1" -filepath ./paramfile01.json
-  Locally:  & "C:\folder\03 - CreateSynLoadPipelineParts.ps1" -filepath "C:\folder\paramfile01.json"
+  Azure CLI:  `./"03 - CreateSynLoadPipelineParts.ps1" -filepath ./paramfile01.json`
+  Locally:  `& "C:\folder\03 - CreateSynLoadPipelineParts.ps1" -filepath "C:\folder\paramfile01.json"`
 6. Navigate to the Synapse workspace and open up Synapse Studio.  Navigate to the manage pane (far left toolbox icon).  Select Linked Services and find the linked service for your Azure SQL DB.  Update the values required and supply your credentials and verify connectivity by hitting the Test Connection button (you'll need to enable the IR for this)
 7. Connect to the Azure SQL DB to create the metadata tables.  Open the SampleMetadataCreate.sql file and update the insert statements for the extracts with your Azure SQL DB.  
 8. Use the same Azure SQL DB connection and open the script CowBiometricsSampleSource.sql.  Run this script to create the COW.Biometrics table and insert sample data.  
