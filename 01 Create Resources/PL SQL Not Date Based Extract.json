@@ -1,0 +1,299 @@
+{
+    "name":  "SQL Not Date Based Extract PL",
+    "properties":  {
+                       "activities":  [
+                                          {
+                                              "name":  "Get Tables To Extract",
+                                              "type":  "Lookup",
+                                              "dependsOn":  [
+
+                                                            ],
+                                              "policy":  {
+                                                             "timeout":  "7.00:00:00",
+                                                             "retry":  0,
+                                                             "retryIntervalInSeconds":  30,
+                                                             "secureOutput":  false,
+                                                             "secureInput":  false
+                                                         },
+                                              "userProperties":  [
+
+                                                                 ],
+                                              "typeProperties":  {
+                                                                     "source":  {
+                                                                                    "type":  "AzureSqlSource",
+                                                                                    "sqlReaderQuery":  {
+                                                                                                           "value":  "SELECT [DBName], [TargetTableSchema], [TableName], [NotDateColumn], [TargetContainer] FROM [ADF].[ExtractTables] \nWHERE [IsActive] = 1 and NotDateColumn = \u0027@{pipeline().parameters.NotDateColumn}\u0027",
+                                                                                                           "type":  "Expression"
+                                                                                                       },
+                                                                                    "queryTimeout":  "02:00:00",
+                                                                                    "partitionOption":  "None"
+                                                                                },
+                                                                     "dataset":  {
+                                                                                     "referenceName":  "LookupMetadataExtractDS",
+                                                                                     "type":  "DatasetReference"
+                                                                                 },
+                                                                     "firstRowOnly":  true
+                                                                 }
+                                          },
+                                          {
+                                              "name":  "Extract from SQL Table to ADLS Parquet",
+                                              "type":  "Copy",
+                                              "dependsOn":  [
+                                                                {
+                                                                    "activity":  "Get Tables To Extract",
+                                                                    "dependencyConditions":  [
+                                                                                                 "Succeeded"
+                                                                                             ]
+                                                                }
+                                                            ],
+                                              "policy":  {
+                                                             "timeout":  "7.00:00:00",
+                                                             "retry":  0,
+                                                             "retryIntervalInSeconds":  30,
+                                                             "secureOutput":  false,
+                                                             "secureInput":  false
+                                                         },
+                                              "userProperties":  [
+
+                                                                 ],
+                                              "typeProperties":  {
+                                                                     "source":  {
+                                                                                    "type":  "AzureSqlSource",
+                                                                                    "sqlReaderQuery":  {
+                                                                                                           "value":  "select * from @{concat(concat(activity(\u0027Get Tables To Extract\u0027).output.firstrow.TargetTableSchema),\u0027.\u0027, string(activity(\u0027Get Tables To Extract\u0027).output.firstrow.TableName))} where @{concat(concat(concat(activity(\u0027Get Tables To Extract\u0027).output.firstrow.NotDateColumn),\u0027 = \u0027\u0027\u0027, pipeline().parameters.NotDateColumnValue),\u0027\u0027\u0027\u0027)}",
+                                                                                                           "type":  "Expression"
+                                                                                                       },
+                                                                                    "queryTimeout":  "02:00:00",
+                                                                                    "partitionOption":  "None"
+                                                                                },
+                                                                     "sink":  {
+                                                                                  "type":  "ParquetSink",
+                                                                                  "storeSettings":  {
+                                                                                                        "type":  "AzureBlobFSWriteSettings"
+                                                                                                    },
+                                                                                  "formatSettings":  {
+                                                                                                         "type":  "ParquetWriteSettings"
+                                                                                                     }
+                                                                              },
+                                                                     "enableStaging":  false,
+                                                                     "translator":  {
+                                                                                        "type":  "TabularTranslator",
+                                                                                        "typeConversion":  true,
+                                                                                        "typeConversionSettings":  {
+                                                                                                                       "allowDataTruncation":  true,
+                                                                                                                       "treatBooleanAsNumber":  false
+                                                                                                                   }
+                                                                                    }
+                                                                 },
+                                              "inputs":  [
+                                                             {
+                                                                 "referenceName":  "SrcSQLTableExtractDS",
+                                                                 "type":  "DatasetReference",
+                                                                 "parameters":  {
+                                                                                    "TargetTableSchema":  {
+                                                                                                              "value":  "@activity(\u0027Get Tables To Extract\u0027).output.firstrow.TargetTableSchema",
+                                                                                                              "type":  "Expression"
+                                                                                                          },
+                                                                                    "TableName":  {
+                                                                                                      "value":  "@activity(\u0027Get Tables To Extract\u0027).output.firstrow.TableName",
+                                                                                                      "type":  "Expression"
+                                                                                                  }
+                                                                                }
+                                                             }
+                                                         ],
+                                              "outputs":  [
+                                                              {
+                                                                  "referenceName":  "SinkADLSParquetExtractDS",
+                                                                  "type":  "DatasetReference",
+                                                                  "parameters":  {
+                                                                                     "DBName":  {
+                                                                                                    "value":  "@activity(\u0027Get Tables To Extract\u0027).output.firstrow.TableName",
+                                                                                                    "type":  "Expression"
+                                                                                                },
+                                                                                     "TargetContainer":  {
+                                                                                                             "value":  "@activity(\u0027Get Tables To Extract\u0027).output.firstrow.TargetContainer",
+                                                                                                             "type":  "Expression"
+                                                                                                         }
+                                                                                 }
+                                                              }
+                                                          ]
+                                          },
+                                          {
+                                              "name":  "Log results to ADF Logging Table",
+                                              "type":  "Copy",
+                                              "dependsOn":  [
+                                                                {
+                                                                    "activity":  "Extract from SQL Table to ADLS Parquet",
+                                                                    "dependencyConditions":  [
+                                                                                                 "Succeeded"
+                                                                                             ]
+                                                                }
+                                                            ],
+                                              "policy":  {
+                                                             "timeout":  "7.00:00:00",
+                                                             "retry":  0,
+                                                             "retryIntervalInSeconds":  30,
+                                                             "secureOutput":  false,
+                                                             "secureInput":  false
+                                                         },
+                                              "userProperties":  [
+
+                                                                 ],
+                                              "typeProperties":  {
+                                                                     "source":  {
+                                                                                    "type":  "AzureSqlSource",
+                                                                                    "sqlReaderQuery":  {
+                                                                                                           "value":  "SELECT \u0027@{pipeline().DataFactory}\u0027 as ADFName,\n\u0027@{pipeline().Pipeline}\u0027 as Pipeline_Name,\n\u0027@{pipeline().parameters.NotDateColumnValue}\u0027 as NotDateColumnValue,\n\u0027@{pipeline().parameters.NotDateColumn}\u0027 as NotDateColumn,\n\u0027@{activity(\u0027Extract from SQL Table to ADLS Parquet\u0027).output.rowsCopied}\u0027 as rowsCopied,\n\u0027@{pipeline().TriggerTime}\u0027 as ADFStarted,\n\u0027@{activity(\u0027Get Tables To Extract\u0027).output.firstrow.DBName}\u0027 as DBName,\n\u0027@{activity(\u0027Get Tables To Extract\u0027).output.firstrow.TargetTableSchema}\u0027 as TargetTableSchema,\n\u0027@{activity(\u0027Get Tables To Extract\u0027).output.firstrow.TableName}\u0027 as TargetTableName,\n\u0027@{activity(\u0027Get Tables To Extract\u0027).output.firstrow.TargetContainer}\u0027 as TargetContainer",
+                                                                                                           "type":  "Expression"
+                                                                                                       },
+                                                                                    "queryTimeout":  "02:00:00",
+                                                                                    "partitionOption":  "None"
+                                                                                },
+                                                                     "sink":  {
+                                                                                  "type":  "AzureSqlSink"
+                                                                              },
+                                                                     "enableStaging":  false,
+                                                                     "translator":  {
+                                                                                        "type":  "TabularTranslator",
+                                                                                        "mappings":  [
+                                                                                                         {
+                                                                                                             "source":  {
+                                                                                                                            "name":  "ADFName",
+                                                                                                                            "type":  "String",
+                                                                                                                            "physicalType":  "varchar"
+                                                                                                                        },
+                                                                                                             "sink":  {
+                                                                                                                          "name":  "ADFName",
+                                                                                                                          "type":  "String",
+                                                                                                                          "physicalType":  "varchar"
+                                                                                                                      }
+                                                                                                         },
+                                                                                                         {
+                                                                                                             "source":  {
+                                                                                                                            "name":  "Pipeline_Name",
+                                                                                                                            "type":  "String",
+                                                                                                                            "physicalType":  "varchar"
+                                                                                                                        },
+                                                                                                             "sink":  {
+                                                                                                                          "name":  "ADFPipelineName",
+                                                                                                                          "type":  "String",
+                                                                                                                          "physicalType":  "varchar"
+                                                                                                                      }
+                                                                                                         },
+                                                                                                         {
+                                                                                                             "source":  {
+                                                                                                                            "name":  "NotDateColumnValue"
+                                                                                                                        },
+                                                                                                             "sink":  {
+                                                                                                                          "name":  "NotDateColumnValue",
+                                                                                                                          "type":  "String",
+                                                                                                                          "physicalType":  "varchar"
+                                                                                                                      }
+                                                                                                         },
+                                                                                                         {
+                                                                                                             "source":  {
+                                                                                                                            "name":  "NotDateColumn"
+                                                                                                                        },
+                                                                                                             "sink":  {
+                                                                                                                          "name":  "NotDateColumn",
+                                                                                                                          "type":  "String",
+                                                                                                                          "physicalType":  "varchar"
+                                                                                                                      }
+                                                                                                         },
+                                                                                                         {
+                                                                                                             "source":  {
+                                                                                                                            "name":  "rowsCopied"
+                                                                                                                        },
+                                                                                                             "sink":  {
+                                                                                                                          "name":  "ADFRowsCopied",
+                                                                                                                          "type":  "Int32",
+                                                                                                                          "physicalType":  "int"
+                                                                                                                      }
+                                                                                                         },
+                                                                                                         {
+                                                                                                             "source":  {
+                                                                                                                            "name":  "ADFStarted"
+                                                                                                                        },
+                                                                                                             "sink":  {
+                                                                                                                          "name":  "ADFStarted",
+                                                                                                                          "type":  "DateTime",
+                                                                                                                          "physicalType":  "datetime"
+                                                                                                                      }
+                                                                                                         },
+                                                                                                         {
+                                                                                                             "source":  {
+                                                                                                                            "name":  "TargetTableSchema"
+                                                                                                                        },
+                                                                                                             "sink":  {
+                                                                                                                          "name":  "TargetTableSchema",
+                                                                                                                          "type":  "String",
+                                                                                                                          "physicalType":  "varchar"
+                                                                                                                      }
+                                                                                                         },
+                                                                                                         {
+                                                                                                             "source":  {
+                                                                                                                            "name":  "DBName"
+                                                                                                                        },
+                                                                                                             "sink":  {
+                                                                                                                          "name":  "SourceDBName",
+                                                                                                                          "type":  "String",
+                                                                                                                          "physicalType":  "varchar"
+                                                                                                                      }
+                                                                                                         },
+                                                                                                         {
+                                                                                                             "source":  {
+                                                                                                                            "name":  "TargetContainer"
+                                                                                                                        },
+                                                                                                             "sink":  {
+                                                                                                                          "name":  "TargetContainer",
+                                                                                                                          "type":  "String",
+                                                                                                                          "physicalType":  "varchar"
+                                                                                                                      }
+                                                                                                         },
+                                                                                                         {
+                                                                                                             "source":  {
+                                                                                                                            "name":  "TargetTableName"
+                                                                                                                        },
+                                                                                                             "sink":  {
+                                                                                                                          "name":  "TargetTableName",
+                                                                                                                          "type":  "String",
+                                                                                                                          "physicalType":  "varchar"
+                                                                                                                      }
+                                                                                                         }
+                                                                                                     ],
+                                                                                        "typeConversion":  true,
+                                                                                        "typeConversionSettings":  {
+                                                                                                                       "allowDataTruncation":  true,
+                                                                                                                       "treatBooleanAsNumber":  false
+                                                                                                                   }
+                                                                                    }
+                                                                 },
+                                              "inputs":  [
+                                                             {
+                                                                 "referenceName":  "LookupMetadataExtractDS",
+                                                                 "type":  "DatasetReference"
+                                                             }
+                                                         ],
+                                              "outputs":  [
+                                                              {
+                                                                  "referenceName":  "SinkSQLLogTableDS",
+                                                                  "type":  "DatasetReference"
+                                                              }
+                                                          ]
+                                          }
+                                      ],
+                       "parameters":  {
+                                          "NotDateColumnValue":  {
+                                                                     "type":  "string"
+                                                                 },
+                                          "NotDateColumn":  {
+                                                                "type":  "string"
+                                                            }
+                                      },
+                       "annotations":  [
+
+                                       ],
+                       "lastPublishTime":  "2020-10-06T13:39:20Z"
+                   },
+    "type":  "Microsoft.DataFactory/factories/pipelines"
+}

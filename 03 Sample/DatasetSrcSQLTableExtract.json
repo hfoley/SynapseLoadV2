@@ -1,0 +1,34 @@
+{
+    "name":  "SrcSQLTableExtractDS",
+    "properties":  {
+                       "linkedServiceName":  {
+                                                 "referenceName":  "AzureSQLDBLS",
+                                                 "type":  "LinkedServiceReference"
+                                             },
+                       "parameters":  {
+                                          "TargetTableSchema":  {
+                                                                    "type":  "string"
+                                                                },
+                                          "TableName":  {
+                                                            "type":  "string"
+                                                        }
+                                      },
+                       "annotations":  [
+
+                                       ],
+                       "type":  "AzureSqlTable",
+                       "schema":  [
+
+                                  ],
+                       "typeProperties":  {
+                                              "schema":  {
+                                                             "value":  "@dataset().TargetTableSchema",
+                                                             "type":  "Expression"
+                                                         },
+                                              "table":  {
+                                                            "value":  "@dataset().TableName",
+                                                            "type":  "Expression"
+                                                        }
+                                          }
+                   }
+}

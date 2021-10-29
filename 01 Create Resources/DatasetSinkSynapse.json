@@ -1,0 +1,37 @@
+{
+    "name": "SinkSynapseTableDS",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "hopeshell5-WorkspaceDefaultSqlServer",
+            "type": "LinkedServiceReference",
+            "parameters": {
+                "DBName": "sumthinelse"
+            }
+        },
+        "parameters": {
+            "TargetTable": {
+                "type": "string"
+            },
+            "TargetTableSchema": {
+                "type": "string"
+            },
+            "ColumnKey": {
+                "type": "string"
+            }
+        },
+        "annotations": [],
+        "type": "AzureSqlDWTable",
+        "schema": [],
+        "typeProperties": {
+            "schema": {
+                "value": "@dataset().TargetTableSchema",
+                "type": "Expression"
+            },
+            "table": {
+                "value": "@dataset().TargetTable",
+                "type": "Expression"
+            }
+        }
+    },
+    "type": "Microsoft.Synapse/workspaces/datasets"
+}

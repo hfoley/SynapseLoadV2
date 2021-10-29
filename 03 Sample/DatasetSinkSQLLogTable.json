@@ -1,0 +1,113 @@
+{
+    "name":  "SinkSQLLogTableDS",
+    "properties":  {
+                       "linkedServiceName":  {
+                                                 "referenceName":  "AzureSQLDBLS",
+                                                 "type":  "LinkedServiceReference"
+                                             },
+                       "annotations":  [
+
+                                       ],
+                       "type":  "AzureSqlTable",
+                       "schema":  [
+                                      {
+                                          "name":  "ADFName",
+                                          "type":  "varchar"
+                                      },
+                                      {
+                                          "name":  "ADFPipelineName",
+                                          "type":  "varchar"
+                                      },
+                                      {
+                                          "name":  "ADFRowsCopied",
+                                          "type":  "int",
+                                          "precision":  10
+                                      },
+                                      {
+                                          "name":  "ADFStarted",
+                                          "type":  "datetime",
+                                          "precision":  23,
+                                          "scale":  3
+                                      },
+                                      {
+                                          "name":  "ADFFinished",
+                                          "type":  "datetime",
+                                          "precision":  23,
+                                          "scale":  3
+                                      },
+                                      {
+                                          "name":  "FileName",
+                                          "type":  "varchar"
+                                      },
+                                      {
+                                          "name":  "BlobContainer",
+                                          "type":  "varchar"
+                                      },
+                                      {
+                                          "name":  "StagingTable",
+                                          "type":  "varchar"
+                                      },
+                                      {
+                                          "name":  "TargetTable",
+                                          "type":  "varchar"
+                                      },
+                                      {
+                                          "name":  "ColumnKey",
+                                          "type":  "varchar"
+                                      },
+                                      {
+                                          "name":  "SourceDBName",
+                                          "type":  "varchar"
+                                      },
+                                      {
+                                          "name":  "TargetTableSchema",
+                                          "type":  "varchar"
+                                      },
+                                      {
+                                          "name":  "TargetTableName",
+                                          "type":  "varchar"
+                                      },
+                                      {
+                                          "name":  "DateColumn",
+                                          "type":  "varchar"
+                                      },
+                                      {
+                                          "name":  "StartDate",
+                                          "type":  "date"
+                                      },
+                                      {
+                                          "name":  "EndDate",
+                                          "type":  "date"
+                                      },
+                                      {
+                                          "name":  "NotDateColumn",
+                                          "type":  "varchar"
+                                      },
+                                      {
+                                          "name":  "TargetContainer",
+                                          "type":  "varchar"
+                                      },
+                                      {
+                                          "name":  "NotDateColumnValue",
+                                          "type":  "varchar"
+                                      },
+                                      {
+                                          "name":  "Pipeline_Name",
+                                          "type":  "nvarchar"
+                                      },
+                                      {
+                                          "name":  "Source",
+                                          "type":  "nvarchar"
+                                      },
+                                      {
+                                          "name":  "Destination",
+                                          "type":  "nvarchar"
+                                      }
+                                  ],
+                       "typeProperties":  {
+                                              "schema":  "ADF",
+                                              "table":  "PipelineLog"
+                                          }
+                   },
+    "type":  "Microsoft.DataFactory/factories/datasets"
+}

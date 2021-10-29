@@ -1,0 +1,14 @@
+{
+    "name":  "AzureSQLDBLS",
+    "type":  "Microsoft.DataFactory/factories/linkedservices",
+    "properties":  {
+                       "annotations":  [
+
+                                       ],
+                       "type":  "AzureSqlDatabase",
+                       "typeProperties":  {
+                                              "connectionString":  "integrated security=False;encrypt=True;connection timeout=30;data source=.database.windows.net;initial catalog=;user id=***changethis***",
+                                              "encryptedCredential":  "GonnaFailUpdateInPortalAfterForNow"
+                                          }
+                   }
+}

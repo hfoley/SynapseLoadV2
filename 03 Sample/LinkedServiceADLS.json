@@ -1,0 +1,17 @@
+{
+    "name":  "DataLakeLS",
+    "type":  "Microsoft.Synapse/workspaces/linkedservices",
+    "properties":  {
+                       "annotations":  [
+
+                                       ],
+                       "type":  "AzureBlobFS",
+                       "typeProperties":  {
+                                              "url":  "https://hopetopialake.dfs.core.windows.net"
+                                          },
+                       "connectVia":  {
+                                          "referenceName":  "AutoResolveIntegrationRuntime",
+                                          "type":  "IntegrationRuntimeReference"
+                                      }
+                   }
+}

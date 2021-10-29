@@ -1,0 +1,129 @@
+{
+    "name":  "SQL Date Based Extract PL",
+    "properties":  {
+                       "activities":  [
+                                          {
+                                              "name":  "Get Tables To Extract",
+                                              "type":  "Lookup",
+                                              "dependsOn":  [
+
+                                                            ],
+                                              "policy":  {
+                                                             "timeout":  "7.00:00:00",
+                                                             "retry":  0,
+                                                             "retryIntervalInSeconds":  30,
+                                                             "secureOutput":  false,
+                                                             "secureInput":  false
+                                                         },
+                                              "userProperties":  [
+
+                                                                 ],
+                                              "typeProperties":  {
+                                                                     "source":  {
+                                                                                    "type":  "AzureSqlSource",
+                                                                                    "sqlReaderQuery":  "SELECT [DBName], [TargetTableSchema], [TableName], [DateColumn], [StartDate], [EndDate], [TargetContainer] FROM [ADF].[ExtractTables] WHERE [IsActive] = 1 and DateColumn is not null",
+                                                                                    "queryTimeout":  "02:00:00",
+                                                                                    "partitionOption":  "None"
+                                                                                },
+                                                                     "dataset":  {
+                                                                                     "referenceName":  "LookupMetadataExtractDS",
+                                                                                     "type":  "DatasetReference"
+                                                                                 },
+                                                                     "firstRowOnly":  false
+                                                                 }
+                                          },
+                                          {
+                                              "name":  "DBName Loop",
+                                              "type":  "ForEach",
+                                              "dependsOn":  [
+                                                                {
+                                                                    "activity":  "Get Tables To Extract",
+                                                                    "dependencyConditions":  [
+                                                                                                 "Succeeded"
+                                                                                             ]
+                                                                }
+                                                            ],
+                                              "userProperties":  [
+
+                                                                 ],
+                                              "typeProperties":  {
+                                                                     "items":  {
+                                                                                   "value":  "@activity(\u0027Get Tables To Extract\u0027).output.value",
+                                                                                   "type":  "Expression"
+                                                                               },
+                                                                     "activities":  [
+                                                                                        {
+                                                                                            "name":  "Extract Tables",
+                                                                                            "type":  "Copy",
+                                                                                            "dependsOn":  [
+
+                                                                                                          ],
+                                                                                            "policy":  {
+                                                                                                           "timeout":  "7.00:00:00",
+                                                                                                           "retry":  0,
+                                                                                                           "retryIntervalInSeconds":  30,
+                                                                                                           "secureOutput":  false,
+                                                                                                           "secureInput":  false
+                                                                                                       },
+                                                                                            "userProperties":  [
+
+                                                                                                               ],
+                                                                                            "typeProperties":  {
+                                                                                                                   "source":  {
+                                                                                                                                  "type":  "AzureSqlSource",
+                                                                                                                                  "sqlReaderQuery":  {
+                                                                                                                                                         "value":  "SELECT * from @{item().TargetTableSchema}.@{item().TableName} where @{item().DateColumn} between \u0027@{substring(item().StartDate, 0, 10)}\u0027 and \u0027@{substring(item().EndDate, 0, 10)}\u0027;",
+                                                                                                                                                         "type":  "Expression"
+                                                                                                                                                     },
+                                                                                                                                  "queryTimeout":  "02:00:00",
+                                                                                                                                  "partitionOption":  "None"
+                                                                                                                              },
+                                                                                                                   "sink":  {
+                                                                                                                                "type":  "ParquetSink",
+                                                                                                                                "storeSettings":  {
+                                                                                                                                                      "type":  "AzureBlobFSWriteSettings"
+                                                                                                                                                  },
+                                                                                                                                "formatSettings":  {
+                                                                                                                                                       "type":  "ParquetWriteSettings"
+                                                                                                                                                   }
+                                                                                                                            },
+                                                                                                                   "enableStaging":  false
+                                                                                                               },
+                                                                                            "inputs":  [
+                                                                                                           {
+                                                                                                               "referenceName":  "SrcSQLTableExtractDS",
+                                                                                                               "type":  "DatasetReference",
+                                                                                                               "parameters":  {
+                                                                                                                                  "TargetTableSchema":  {
+                                                                                                                                                            "value":  "@item().TargetTableSchema",
+                                                                                                                                                            "type":  "Expression"
+                                                                                                                                                        },
+                                                                                                                                  "TableName":  {
+                                                                                                                                                    "value":  "@item().TableName",
+                                                                                                                                                    "type":  "Expression"
+                                                                                                                                                }
+                                                                                                                              }
+                                                                                                           }
+                                                                                                       ],
+                                                                                            "outputs":  [
+                                                                                                            {
+                                                                                                                "referenceName":  "SinkADLSParquetExtractDS",
+                                                                                                                "type":  "DatasetReference",
+                                                                                                                "parameters":  {
+                                                                                                                                   "DBName":  "@item().TableName",
+                                                                                                                                   "TargetContainer":  "@item().TargetContainer"
+                                                                                                                               }
+                                                                                                            }
+                                                                                                        ]
+                                                                                        }
+                                                                                    ]
+                                                                 }
+                                          }
+                                      ],
+                       "annotations":  [
+
+                                       ],
+                       "lastPublishTime":  "2020-10-05T18:35:18Z"
+                   },
+    "type":  "Microsoft.DataFactory/factories/pipelines"
+}
