@@ -35,9 +35,9 @@ PL SQL Not Date Based Extract.json | Json file tied to the creation of the colum
   Locally:  `& "C:\folder\01 - CreateSynLoadResources.ps1" -filepath "C:\folder\paramfile01.json"`
   
 3. Run the 02 - SynLoadGrantRights.ps1 script.  You'll again be prompted for login to Azure.  This script will assign the rights needed to the ADLS storage account.  It will grant your account (or the admin user provided in the paramfile) to the role Storage Blob Data Contributor role on the ADLS account.  Below is a sample syntax.  
-  Azure CLI:  ./"02 - SynLoadGrantRights.ps1" -filepath ./paramfile01.json
+  Azure CLI:  `./"02 - SynLoadGrantRights.ps1" -filepath ./paramfile01.json`
   
-  Locally:  & "C:\folder\02 - SynLoadGrantRights.ps1" -filepath "C:\folder\paramfile01.json"
+  Locally:  `& "C:\folder\02 - SynLoadGrantRights.ps1" -filepath "C:\folder\paramfile01.json"`
   
 4. Run the 03 - CreateSynLoadPipelineParts.ps1 script.  You'll again be prompted for login to Azure.  This script will create the items within the Synapse workspace to build the pipelines.  It will create linked services, datasets, and pipelines.  Below is a sample syntax.  
   Azure CLI:  `./"03 - CreateSynLoadPipelineParts.ps1" -filepath ./paramfile01.json`
