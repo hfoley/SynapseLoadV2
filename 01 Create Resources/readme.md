@@ -2,7 +2,7 @@
 This folder contains the files you'll need to create all the components for the solution.  The only file you need to update is the paramfile01.json.  All the scripts use this file to drive the names, locations, ect. to build it out in your environment.  Make sure you have rights to create resources in your Azure subscription.  You can use existing resources for this solution.  The script will check for it's existence first, before creating it.  IMPORTANT: If you create a new dedicated SQL pool, it will begin running.  Make sure to PAUSE the dedicated SQL pool when you're not using it.  HOPE WARNING: DON'T WASTE $$ in Azure on it accidentally.  
 
 
-## File List - These items will be created in your Azure subscription
+## File List - These files will need to be copied to a folder locaiton
 
 Filename  | Description
 ------------- | -------------
