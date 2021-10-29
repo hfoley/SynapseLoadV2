@@ -18,8 +18,8 @@ The architecture of the solution diagrammed below.
 	10. Azure Synapse - Synapse Truncate Load pipeline - parameter/metadata driven pipeline that does truncate/reload pattern into Synapse SQL pool only target tables
 	
 * [01 Create Resources](https://github.com/hfoley/SynapseLoadV2/tree/master/01%20Create%20Resources)   - contains PowerShell scripts to build all the Azure components in the solution. 
-* [02 SQL Scripts](https://github.com/hfoley/SynapseLoadV2/tree/master/02%20SQL%20Scripts)   - contains the SQL Server script to create the metadata tables and insert data in your Azure SQL DB.  
-* [03 SQL Scripts](https://github.com/hfoley/SynapseLoadV2/tree/master/03%20Sample)  - contains all the files if you'd like to setup a sample source/destination.  
+* [02 SQL Scripts](https://github.com/hfoley/SynapseLoadV2/tree/master/02%20SQL%20Scripts) - contains the SQL Server script to create the metadata tables and insert data in your Azure SQL DB.  
+* [03 Sample](https://github.com/hfoley/SynapseLoadV2/tree/master/03%20Sample) - contains all the files if you'd like to setup a sample source/destination.  
 	
 
 ## Pre-reqs
@@ -34,7 +34,7 @@ The architecture of the solution diagrammed below.
 Each folder contains PowerShell and/or SQL scripts you'll need to update for your environment.  Further details on the files are in the readme of each section.  
 
 1. Start here if you want to build the solution using a sample source/destination >> [03 Sample](https://github.com/hfoley/SynapseLoadV2/tree/master/03%20Sample)
-2. Start here to just create Azure resources above >> [01 Create Resources](https://github.com/hfoley/SynapseLoadV2/tree/master/01%20Create%20Resources) 
+2. Start here to just need SQL metadata scripts >> [02 SQL Scripts](https://github.com/hfoley/SynapseLoadV2/tree/master/02%20SQL%20Scripts)
 3. Here's the location containing the script to create the SQL metadata tables >> [02 ADF Create](https://github.com/hfoley/SynapseLoadV2/tree/master/02%20ADF%20Create).  
 
 
