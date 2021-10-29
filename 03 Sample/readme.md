@@ -24,7 +24,7 @@ PL SQL Date Based Extract.json | Json file tied to the creation of the date rang
 PL SQL Not Date Based Extract.json | Json file tied to the creation of the column value pull pipeline
 CowBiometricsSampleSource.sql | SQL script to create a sample COW.Biometrics table to use as a source table to extract
 SampleMetadataCreate.sql | SQL script to create the metadata and logging tables including insert statements
-ADFBiometricsSynapseTargetCreate.sql | SQL script to create the destination tables in dedicated SQL pool to load parquet files
+COWBiometricsSynapseTargetCreate.sql | SQL script to create the destination tables in dedicated SQL pool to load parquet files
 
 
 ## Azure Asset List - These items will be created in your Azure subscription
